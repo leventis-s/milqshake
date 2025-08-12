@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const extractionOptions = ["Months", "Days", "Numbers", "Dates", "Other"];
 
@@ -79,7 +80,8 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [csvUrl, setCsvUrl] = useState("");
   const [message, setMessage] = useState("");
-  const [scriptType, setScriptType] = useState("Latin-based");
+  const [scriptType, setScriptType] = useState("");
+  const [disclaimerChecked, setDisclaimerChecked] = useState(false);
 
   const handleExtractionChange = (e) => {
     setExtractionElement(e.target.value);
@@ -220,6 +222,7 @@ export default function HomePage() {
                 fontSize: "1rem",
                 fontFamily: "Arial",
                 backgroundColor: "white",
+                color: extractionElement === "" ? "gray" : "black",
               }}
             >
               <option value="" disabled>
@@ -273,8 +276,12 @@ export default function HomePage() {
                 fontSize: "1rem",
                 fontFamily: "Arial",
                 backgroundColor: "white",
+                color: scriptType === "" ? "gray" : "black",
               }}
             >
+              <option value="" disabled>
+                Select an element
+              </option>
               <option value="Latin">Latin</option>
               <option value="Devanagari">Devanagari</option>
               <option value="Arabic">Arabic</option>
@@ -302,7 +309,22 @@ export default function HomePage() {
               />
             </div>
           </div>
-
+          <label style={{ display: "block", margin: "1rem 0" }}>
+            <input
+              type="checkbox"
+              checked={disclaimerChecked}
+              onChange={(e) => setDisclaimerChecked(e.target.checked)}
+              required
+            />{" "}
+            I have read and agree to the{" "}
+            <Link
+              style={{ textDecoration: "underline", color: "blue" }}
+              href="/disclaimer"
+            >
+              disclaimer
+            </Link>
+            .
+          </label>
           {/* Submit button */}
           <button
             type="submit"
