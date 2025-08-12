@@ -60,7 +60,9 @@ function FileDropzone({ label, file, setFile }) {
         style={{ display: "none" }}
         accept=".txt"
       />
-      <p style={{ margin: 0, fontWeight: "bold", fontSize: "1.1rem" }}>{label}</p>
+      <p style={{ margin: 0, fontWeight: "bold", fontSize: "1.1rem" }}>
+        {label}
+      </p>
       <p style={{ marginTop: "0.5rem", color: "#555", fontSize: "0.9rem" }}>
         {file ? file.name : "Drag & drop a file here, or click to select"}
       </p>
@@ -89,9 +91,12 @@ export default function HomePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!language) return setMessage("Please enter a language.");
-    if (!extractionElement) return setMessage("Please select an extraction element.");
-    if (extractionElement === "Other" && !otherElement.trim()) return setMessage("Please specify the extraction element.");
-    if (!englishFile || !targetFile) return setMessage("Please upload both files.");
+    if (!extractionElement)
+      return setMessage("Please select an extraction element.");
+    if (extractionElement === "Other" && !otherElement.trim())
+      return setMessage("Please specify the extraction element.");
+    if (!englishFile || !targetFile)
+      return setMessage("Please upload both files.");
 
     setMessage("");
     setLoading(true);
@@ -142,16 +147,16 @@ export default function HomePage() {
         style={{
           maxWidth: "800px",
           width: "100%",
-          backgroundColor: "#fffde7",  // keep form area white
+          backgroundColor: "#fffde7", // keep form area white
           padding: "2rem",
-          borderRadius: "8px"
+          borderRadius: "8px",
         }}
       >
         {/* Header with text + logo */}
         <div
           style={{
             display: "flex",
-            alignItems: "flex-start",  // align items a bit up
+            alignItems: "flex-start", // align items a bit up
             justifyContent: "center",
             gap: "0.5rem",
           }}
@@ -173,7 +178,10 @@ export default function HomePage() {
             style={{ marginTop: "-0.5rem" }} // lift the logo slightly
           />
         </div>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+        >
           {/* Language input */}
           <label style={{ fontWeight: "bold" }}>
             Target Language:
@@ -191,7 +199,7 @@ export default function HomePage() {
                 border: "1px solid #ccc",
                 fontSize: "1rem",
                 fontFamily: "Arial",
-                backgroundColor: "white"
+                backgroundColor: "white",
               }}
             />
           </label>
@@ -211,7 +219,7 @@ export default function HomePage() {
                 border: "1px solid #ccc",
                 fontSize: "1rem",
                 fontFamily: "Arial",
-                backgroundColor: "white"
+                backgroundColor: "white",
               }}
             >
               <option value="" disabled>
@@ -243,7 +251,7 @@ export default function HomePage() {
                   border: "1px solid #ccc",
                   fontSize: "1rem",
                   fontFamily: "Arial",
-                  backgroundColor: "white"
+                  backgroundColor: "white",
                 }}
               />
             </label>
@@ -264,21 +272,34 @@ export default function HomePage() {
                 border: "1px solid #ccc",
                 fontSize: "1rem",
                 fontFamily: "Arial",
-                backgroundColor: "white"
+                backgroundColor: "white",
               }}
             >
-              <option value="Latin-based">Latin-based</option>
-              <option value="Non-latin-based">Non-Latin-based</option>
+              <option value="Latin">Latin</option>
+              <option value="Devanagari">Devanagari</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Bengali">Bengali</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Cyrillic">Cyrillic</option>
+              <option value="Other-script">Other</option>
             </select>
           </label>
 
           {/* File upload boxes side by side */}
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem"}}>
-              <FileDropzone label="English language file" file={englishFile} setFile={setEnglishFile} />
+            <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem" }}>
+              <FileDropzone
+                label="English language file"
+                file={englishFile}
+                setFile={setEnglishFile}
+              />
             </div>
-            <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem"}}>
-              <FileDropzone label="Target language file" file={targetFile} setFile={setTargetFile} />
+            <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem" }}>
+              <FileDropzone
+                label="Target language file"
+                file={targetFile}
+                setFile={setTargetFile}
+              />
             </div>
           </div>
 
