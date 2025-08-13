@@ -147,7 +147,7 @@ export default async function handler(req, res) {
             variants: inferredVariants,
             count: singularInfo.count || 1,
             total: singularInfo.total || 1,
-            confidence: singularInfo.confidence || 1,
+            confidence: "N/A",
           };
       
           console.log(`✅ Inferred singular for '${baseWord}': ${inferredCanonical}`);

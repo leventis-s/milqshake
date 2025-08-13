@@ -125,7 +125,7 @@ export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptT
       console.log(`Processing key: ${key}\n`);
       let topWord = null;
       let topCount = 0;
-      let confidence = 0.0;
+      let confidence = "0/0";
       let variants = [];
   
       for (const [engSent, tgtSent] of sentencePairs) {
@@ -196,7 +196,7 @@ export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptT
           topWord = Object.entries(similarityScores).sort((a, b) => b[1] - a[1])[0][0];
         }
   
-        confidence = topCount / total;
+        confidence = `${topCount}/${total}`;
   
         // Recompute variants excluding the top word
         variants = sorted
@@ -220,7 +220,7 @@ export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptT
   
       console.log(`\nAll filtered translations for ${key}:`);
       filteredWords.forEach((w, i) => console.log(`  ${i + 1}. ${w}`));
-      console.log(`Top translation: ${topWord} (confidence: ${confidence.toFixed(2)})`);
+      console.log(`Top translation: ${topWord} (confidence: ${confidence})`);
       console.log(variants.length ? `Variants: ${variants.join(", ")}` : "Variants: None");
       console.log("\n" + "-".repeat(40) + "\n");
     }
@@ -271,13 +271,13 @@ export async function extractTermsFromFiles(engFile, targetFile, extractFunc) {
   }
 
 export function generateTranslationComparisonCsv(gptSummary) {
-    let csvContent = "Term,Confidence,Variants,Canonical\n";
+    let csvContent = "Term,Prevalence,Variants,Canonical\n";
   
     for (const term of Object.keys(gptSummary)) {
       const { confidence, variants, canonical } = gptSummary[term];
       const variantsArr = Array.isArray(variants) ? variants : [];
       const variantsStr = variantsArr.length > 0 ? variantsArr.join(", ") : "-";
-      csvContent += `"${term}",${(confidence * 100).toFixed(1)},"${variantsStr}","${canonical}"\n`;
+      csvContent += `"${term}","${confidence}","${variantsStr}","${canonical}"\n`;
     }
   
     return csvContent;
