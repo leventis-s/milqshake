@@ -1,0 +1,987 @@
+Language,Code
+Fula,ff
+Unknown language,und
+Arabic,ar
+Azerbaijani,az
+Persian,fa
+Indonesian,id
+Kazakh,kk
+Kyrgyz,ky
+Malay,ms
+Pashto,ps
+Somali,so
+Tajik,tg
+Turkmen,tk
+Turkish,tr
+Urdu,ur
+Uzbek,uz
+Ndzwani Comorian,wni
+Wolof,wo
+Ngazidja Comorian,zdj
+Tunisian Arabic,aeb
+Levantine Arabic,apc
+Sudanese Arabic,apd
+Algerian Arabic,arq
+Najdi Arabic,ars
+Moroccan Arabic,ary
+Egyptian Arabic,arz
+Baluchi,bal
+Beja,bej
+Balti,bft
+Western Balochi,bgn
+Bakhtiari,bqi
+Brahui,brh
+Western Cham,cja
+Eastern Cham,cjm
+Central Kurdish,ckb
+Deccan,dcc
+Dogri,doi
+Jola-Fonyi,dyo
+Nobiin,fia
+Zoroastrian Dari,gbz
+Kachi Koli,gjk
+Gujari,gju
+Gilaki,glk
+Hausa,ha
+Hazaragi,haz
+Southern Hindko,hnd
+Northern Hindko,hno
+Ingush,inh
+Khowar,khw
+Kashmiri,ks
+Kurdish,ku
+Parkari Koli,kvx
+Wadiyara Koli,kxp
+Western Panjabi,lah
+Laki,lki
+Northern Luri,lrc
+Southern Luri,luz
+Pattani Malay,mfa
+Indus Kohistani,mvy
+Mazanderani,mzn
+Punjabi,pa
+Parsi-Dari,prd
+Rohingya,rhg
+Domari,rmt
+Sindhi,sd
+Southern Kurdish,sdh
+Tachelhit,shi
+Saraiki,skr
+Susu,sus
+Comorian,swb
+Talysh,tly
+Torwali,trw
+Muslim Tat,ttt
+Uyghur,ug
+Coptic,cop
+Armenian,hy
+Avestan,ae
+Balinese,ban
+Kawi,kaw
+Bamun,bax
+Bangla,bn
+Assamese,as
+Bishnupriya,bpy
+Chakma,ccp
+Garo,grt
+Khasi,kha
+Mizo,lus
+Manipuri,mni
+Rangpuri,rkt
+Santali,sat
+Sylheti,syl
+Mundari,unr
+Munda,unx
+Batak Toba,bbc
+Chinese,zh
+Buginese,bug
+Makasar,mak
+Mandar,mdr
+Buhid,bku
+Carian,xcr
+Lezghian,lez
+Chakma,ccp
+Western Cham,cja
+Eastern Cham,cjm
+Cherokee,chr
+Coptic,cop
+Eteocypriot,ecy
+Azerbaijani,az
+Belarusian,be
+Bulgarian,bg
+Bosnian,bs
+Kazakh,kk
+Kyrgyz,ky
+Macedonian,mk
+Mongolian,mn
+Romanian,ro
+Russian,ru
+Serbian,sr
+Tajik,tg
+Turkmen,tk
+Ukrainian,uk
+Uzbek,uz
+Abkhazian,ab
+Abaza,abq
+Adyghe,ady
+Assyrian Neo-Aramaic,aii
+Southern Altai,alt
+Avaric,av
+Bashkir,ba
+Buriat,bua
+Chechen,ce
+Mari,chm
+Shor,cjs
+Chukot,ckt
+Crimean Tatar,crh
+Chuvash,cv
+Dargwa,dar
+Dungan,dng
+Evenki,evn
+Gagauz,gag
+Nanai,gld
+Ingush,inh
+Kara-Kalpak,kaa
+Kabardian,kbd
+Khanty,kca
+Khakas,kjh
+Komi-Permyak,koi
+Koryak,kpy
+Karachay-Balkar,krc
+Kurdish,ku
+Kumyk,kum
+Komi,kv
+Lak,lbe
+Lezghian,lez
+Moksha,mdf
+Mansi,mns
+Western Mari,mrj
+Erzya,myv
+Nogai,nog
+Ossetic,os
+Pontic,pnt
+Romany,rom
+Rusyn,rue
+Yakut,sah
+Northern Sami,se
+Selkup,sel
+Tabassaran,tab
+Tsakhur,tkr
+Talysh,tly
+Tatar,tt
+Muslim Tat,ttt
+Tuvinian,tyv
+Udihe,ude
+Udmurt,udm
+Uyghur,ug
+Kalmyk,xal
+Nenets,yrk
+Church Slavic,cu
+Lingua Franca Nova,lfn
+English,en
+Hindi,hi
+Fiji Hindi,hif
+Nepali,ne
+Angika,anp
+Awadhi,awa
+Bantawa,bap
+Bagheli,bfy
+Haryanvi,bgc
+Bhili,bhb
+Bhilali,bhi
+Bhojpuri,bho
+Kanauji,bjj
+Braj,bra
+Bodo,brx
+Bateri,btv
+Dogri,doi
+Dotyali,dty
+Garhwali,gbm
+Gondi,gon
+Gurung,gvr
+Chhattisgarhi,hne
+Ho,hoc
+Hadothi,hoj
+Jumli,jml
+Kachhi,kfr
+Kumaoni,kfy
+Khandesi,khn
+Konkani (individual language),knn
+Konkani,kok
+Kurukh,kru
+Kashmiri,ks
+Kuvi,kxv
+Limbu,lif
+Magahi,mag
+Maithili,mai
+Eastern Magar,mgp
+Marathi,mr
+Western Magar,mrd
+Mewari,mtr
+Marwari,mwr
+Newari,new
+Nimadi,noe
+Rajasthani,raj
+Rajbanshi,rjs
+Santali,sat
+Sadri,sck
+Sindhi,sd
+Sirmauri,srx
+Shekhawati,swv
+Eastern Tamang,taj
+Western Tamang,tdg
+Thulung,tdh
+Dangaura Tharu,thl
+Kochila Tharu,thq
+Rana Tharu,thr
+Kathoriya Tharu,tkt
+Mundari,unr
+Munda,unx
+Wagdi,wbr
+Mewati,wtm
+Kangri,xnr
+Sherpa,xsr
+Pali,pi
+Sanskrit,sa
+French,fr
+Ancient Egyptian,egy
+Albanian,sq
+Amharic,am
+Tigrinya,ti
+Blin,byn
+Oromo,om
+Tigre,tig
+Wolaytta,wal
+Geez,gez
+Lisu,lis
+Georgian,ka
+Laz,lzz
+Mingrelian,xmf
+Gothic,got
+Sanskrit,sa
+Greek,el
+Balkan Gagauz Turkish,bgx
+Pontic,pnt
+Tsakonian,tsd
+Coptic,cop
+Ancient Greek,grc
+Gujarati,gu
+Punjabi,pa
+Vietnamese,vi
+Rohingya,rhg
+Hanunoo,hnn
+Hebrew,he
+Judeo-Persian,jpr
+Judeo-Arabic,jrb
+Ladino,lad
+Yiddish,yi
+Samaritan Aramaic,sam
+Aramaic,arc
+Pahlavi,pal
+Parthian,xpr
+Japanese,ja
+Javanese,jv
+Kawi,kaw
+Kannada,kn
+Tulu,tcy
+Ainu,ain
+Central Okinawan,ryu
+Kawi,kaw
+Eastern Kayah,eky
+Western Kayah,kyu
+Khmer,km
+Sindhi,sd
+Sindhi,sd
+Korean,ko
+Northern Thai,nod
+Lao,lo
+Hmong Njua,hnj
+Khmu,kjg
+Aymara,ay
+Azerbaijani,az
+Bislama,bi
+Bosnian,bs
+Catalan,ca
+Chamorro,ch
+Czech,cs
+Danish,da
+German,de
+English,en
+Spanish,es
+Estonian,et
+Finnish,fi
+Filipino,fil
+Fijian,fj
+Faroese,fo
+French,fr
+Irish,ga
+Gilbertese,gil
+Guarani,gn
+Swiss German,gsw
+Manx,gv
+Hindi,hi
+Fiji Hindi,hif
+Hiri Motu,ho
+Croatian,hr
+Haitian Creole,ht
+Hungarian,hu
+Indonesian,id
+Icelandic,is
+Italian,it
+Kalaallisut,kl
+Kyrgyz,ky
+Luxembourgish,lb
+Lithuanian,lt
+Latvian,lv
+Malagasy,mg
+Marshallese,mh
+Māori,mi
+Malay,ms
+Maltese,mt
+Nauru,na
+Norwegian Bokmål,nb
+North Ndebele,nd
+Niuean,niu
+Dutch,nl
+Norwegian Nynorsk,nn
+Norwegian,no
+Nyanja,ny
+Papiamento,pap
+Palauan,pau
+Polish,pl
+Portuguese,pt
+Quechua,qu
+Rundi,rn
+Romanian,ro
+Kinyarwanda,rw
+Sango,sg
+Slovak,sk
+Slovenian,sl
+Samoan,sm
+Shona,sn
+Somali,so
+Albanian,sq
+Serbian,sr
+Swati,ss
+Southern Sotho,st
+Swedish,sv
+Swahili,sw
+Tetum,tet
+Tajik,tg
+Turkmen,tk
+Tokelau,tkl
+Tswana,tn
+Tongan,to
+Tok Pisin,tpi
+Turkish,tr
+Tuvalu,tvl
+Tahitian,ty
+Central Atlas Tamazight,tzm
+Uzbek,uz
+Vietnamese,vi
+Wolof,wo
+Yoruba,yo
+Chinese,zh
+Afar,aa
+Abron,abr
+Acehnese,ace
+Acoli,ach
+Adangme,ada
+Afrikaans,af
+Aghem,agq
+Ainu,ain
+Akan,ak
+Alabama,akz
+Aleut,ale
+Gheg Albanian,aln
+Amo,amo
+Aragonese,an
+Obolo,ann
+Uab Meto,aoz
+Mapuche,arn
+Araona,aro
+Arapaho,arp
+Arawak,arw
+Asu,asa
+Asturian,ast
+Atikamekw,atj
+Baluchi,bal
+Balinese,ban
+Bavarian,bar
+Basaa,bas
+Batak Toba,bbc
+Ghomala,bbj
+Baoulé,bci
+Bemba,bem
+Betawi,bew
+Bena,bez
+Bafut,bfd
+Bikol,bik
+Bini,bin
+Banjar,bjn
+Balanta-Ganja,bjt
+Kom,bkm
+Buhid,bku
+Siksiká,bla
+Anii,blo
+Bambara,bm
+Bomu,bmq
+Koro Wachi,bqv
+Breton,br
+Brahui,brh
+Bassari,bsc
+Akoose,bss
+Rinconada Bikol,bto
+Bushi,buc
+Buginese,bug
+Bulu,bum
+Bube,bvb
+Medumba,byv
+Jenaama Bozo,bze
+Kɛlɛngaxo Bozo,bzx
+Caddo,cad
+Carib,car
+Cayuga,cay
+Atsam,cch
+Cebuano,ceb
+Chiga,cgg
+Chuukese,chk
+Chinook Jargon,chn
+Choctaw,cho
+Chipewyan,chp
+Cheyenne,chy
+Chickasaw,cic
+Chilcotin,clc
+Corsican,co
+Capiznon,cps
+Cree,cr
+Michif,crg
+Southern East Cree,crj
+Northern East Cree,crl
+Seselwa Creole French,crs
+Kashubian,csb
+Tedim Chin,ctd
+Welsh,cy
+Dakota,dak
+Taita,dav
+Delaware,del
+Slave,den
+Dogrib,dgr
+Dinka,din
+Zarma,dje
+Dan,dnj
+Lower Sorbian,dsb
+Tomo Kan Dogon,dtm
+Central Dusun,dtp
+Duala,dua
+Jola-Fonyi,dyo
+Dyula,dyu
+Embu,ebu
+Ewe,ee
+Efik,efi
+Emilian,egl
+Ekajuk,eka
+Central Yupik,esu
+Basque,eu
+Ewondo,ewo
+Extremaduran,ext
+Fang,fan
+Fula,ff
+Maasina Fulfulde,ffm
+Tornedalen Finnish,fit
+Fon,fon
+Cajun French,frc
+Arpitan,frp
+Northern Frisian,frr
+Eastern Frisian,frs
+East Futuna,fud
+Central-Eastern Niger Fulfulde,fuq
+Friulian,fur
+Nigerian Fulfulde,fuv
+Fur,fvr
+Western Frisian,fy
+Ga,gaa
+Gagauz,gag
+Gayo,gay
+Gbaya,gba
+Guianese Creole French,gcr
+Scottish Gaelic,gd
+Galician,gl
+Gorontalo,gor
+Gronings,gos
+Grebo,grb
+Guajajára,gub
+Wayuu,guc
+Frafra,gur
+Gusii,guz
+Gwichʼin,gwi
+Hausa,ha
+Haida,hai
+Hawaiian,haw
+Hiligaynon,hil
+Hmong,hmn
+Hanunoo,hnn
+Hopi,hop
+Upper Sorbian,hsb
+Hupa,hup
+Halkomelem,hur
+Herero,hz
+Iban,iba
+Ibibio,ibb
+Ifè,ife
+Igbo,ig
+Sichuan Yi,ii
+Inupiaq,ik
+Western Canadian Inuktitut,ikt
+Iloko,ilo
+Ingush,inh
+Inuktitut,iu
+Ingrian,izh
+Jamaican Creole English,jam
+Ngomba,jgo
+Machame,jmc
+Javanese,jv
+Kara-Kalpak,kaa
+Kabyle,kab
+Kachin,kac
+Jju,kaj
+Kamba,kam
+Xaasongaxango,kao
+Tyap,kcg
+Kalanga,kck
+Makonde,kde
+Kabuverdianu,kea
+Kenyang,ken
+Koro,kfo
+Kongo,kg
+Komering,kge
+Kaingang,kgp
+Khasi,kha
+Koyra Chiini,khq
+Kikuyu,ki
+Kirmanjki,kiu
+Kuanyama,kj
+Khmu,kjg
+Kako,kkj
+Kalenjin,kln
+Kimbundu,kmb
+Mankanya,knf
+Konkani,kok
+Kosraean,kos
+Kpelle,kpe
+Kanuri,kr
+Krio,kri
+Kinaray-a,krj
+Karelian,krl
+Shambala,ksb
+Bafia,ksf
+Colognian,ksh
+Kurdish,ku
+Kutenai,kut
+Kerinci,kvr
+Cornish,kw
+Kwakʼwala,kwk
+Kuvi,kxv
+Langi,lag
+Lango (Uganda),laj
+Lamba,lam
+Tolaki,lbw
+Ganda,lg
+Limburgish,li
+Ligurian,lij
+Lillooet,lil
+Livonian,liv
+Lampung Api,ljp
+Lakota,lkt
+Ladin,lld
+Lombard,lmo
+Lingala,ln
+Mongo,lol
+Lozi,loz
+Latgalian,ltg
+Luba-Katanga,lu
+Luba-Lulua,lua
+Lunda,lun
+Luo,luo
+Lushootseed,lut
+Luyia,luy
+Laz,lzz
+Madurese,mad
+Mafa,maf
+Makasar,mak
+Mandingo,man
+Masai,mas
+Central Mazahua,maz
+Maguindanaon,mdh
+Mandar,mdr
+Mbere,mdt
+Mende,men
+Meru,mer
+Morisyen,mfe
+Mandjak,mfv
+Makhuwa-Meetto,mgh
+Metaʼ,mgo
+Mbunga,mgy
+Mócheno,mhn
+Mi'kmaw,mic
+Minangkabau,min
+Masalit,mls
+Innu-aimun,moe
+Mohawk,moh
+Mossi,mos
+Mru,mro
+Mundang,mua
+Muscogee,mus
+Kita Maninkakan,mwk
+Mirandese,mwl
+Mentawai,mwv
+Manyika,mxc
+Masaaba,myx
+Neapolitan,nap
+Nama,naq
+Central Huasteca Nahuatl,nch
+Ndau,ndc
+Low German,nds
+Ndonga,ng
+Lomwe,ngl
+Eastern Huasteca Nahuatl,nhe
+Western Huasteca Nahuatl,nhw
+Nias,nia
+Ngaju,nij
+Ao Naga,njo
+Kwasio,nmg
+Ngiemboon,nnh
+South Ndebele,nr
+Naskapi,nsk
+Northern Sotho,nso
+Nuer,nus
+Navajo,nv
+Naxi,nxq
+Nyamwezi,nym
+Nyankole,nyn
+Nyoro,nyo
+Nzima,nzi
+Occitan,oc
+Ojibwa,oj
+Western Ojibwa,ojw
+Okanagan,oka
+Oromo,om
+Osage,osa
+Pangasinan,pag
+Pampanga,pam
+Picard,pcd
+Nigerian Pidgin,pcm
+Pennsylvania German,pdc
+Plautdietsch,pdt
+Palatine German,pfl
+Pijin,pis
+Pökoot,pko
+Piedmontese,pms
+Pontic,pnt
+Pohnpeian,pon
+Pipil,ppl
+Maliseet-Passamaquoddy,pqm
+Prussian,prg
+Punu,puu
+Kʼicheʼ,quc
+Chimborazo Highland Quichua,qug
+Rapanui,rap
+Rarotongan,rar
+Réunion Creole French,rcf
+Rejang,rej
+Romagnol,rgn
+Rohingya,rhg
+Riang (India),ria
+Riffian,rif
+Romansh,rm
+Kalo Finnish Romani,rmf
+Sinte Romani,rmo
+Tavringer Romani,rmu
+Ronga,rng
+Tae',rob
+Rombo,rof
+Romany,rom
+Rotuman,rtm
+Roviana,rug
+Aromanian,rup
+Rwa,rwk
+Sandawe,sad
+Safaliba,saf
+Samburu,saq
+Sasak,sas
+Santali,sat
+Sangu,sbp
+Sardinian,sc
+Sicilian,scn
+Scots,sco
+North Slavey,scs
+Sassarese Sardinian,sdc
+Northern Sami,se
+Seneca,see
+Cebaara Senoufo,sef
+Sena,seh
+Seri,sei
+Koyraboro Senni,ses
+Samogitian,sgs
+Tachelhit,shi
+Sidamo,sid
+Lower Silesian,sli
+Selayar,sly
+Southern Sami,sma
+Lule Sami,smj
+Inari Sami,smn
+Skolt Sami,sms
+Noon,snf
+Soninke,snk
+Sora,srb
+Sranan Tongo,srn
+Serer,srr
+Saho,ssy
+Saterland Frisian,stq
+Sundanese,su
+Sukuma,suk
+Susu,sus
+Comorian,swb
+Swabian,swg
+Sangir,sxn
+Seki,syi
+Silesian,szl
+Tagbanwa,tbw
+Timne,tem
+Teso,teo
+Tereno,ter
+Tiv,tiv
+Tsakhur,tkr
+Tlingit,tli
+Talysh,tly
+Tamashek,tmh
+Ménik,tnr
+Nyasa Tonga,tog
+Turoyo,tru
+Taroko,trv
+Tsonga,ts
+Tausug,tsg
+Tsimshian,tsi
+Tooro,ttj
+Muslim Tat,ttt
+Tumbuka,tum
+Tasawaq,twq
+Udmurt,udm
+Uyghur,ug
+Ulithian,uli
+Umbundu,umb
+Vai,vai
+Venda,ve
+Venetian,vec
+Veps,vep
+Virgin Islands Creole English,vic
+West Flemish,vls
+Main-Franconian,vmf
+Makhuwa,vmw
+Votic,vot
+Võro,vro
+Vunjo,vun
+Walloon,wa
+Walser,wae
+Waray,war
+Washo,was
+Warlpiri,wbp
+Wallisian,wls
+Xavánte,xav
+Xhosa,xh
+Soga,xog
+Yao,yao
+Yapese,yap
+Yangben,yav
+Yemba,ybb
+Nheengatu,yrl
+Yucateco,yua
+Zhuang,za
+Zaghawa,zag
+Zapotec,zap
+Zeelandic,zea
+Negeri Sembilan Malay,zmi
+Zulu,zu
+Zuni,zun
+Zaza,zza
+Old English,ang
+Kotava,avk
+Cacaopera,ccr
+Middle Dutch,dum
+Middle English,enm
+Esperanto,eo
+Etruscan,ett
+Middle French,frm
+Old French,fro
+Middle High German,gmh
+Old High German,goh
+Interlingua,ia
+Interlingue,ie
+Ido,io
+Lojban,jbo
+Jutish,jut
+Latin,la
+Lenca,len
+Lingua Franca Nova,lfn
+Luiseno,lui
+Novial,nov
+Oscan,osc
+Old Provençal,pro
+Old Irish,sga
+Toki Pona,tok
+Volapük,vo
+Umbrian,xum
+Lepcha,lep
+Limbu,lif
+Linear A,lab
+Mycenaean Greek,gmy
+Lycian,xlc
+Lydian,xld
+Hindi,hi
+Malayalam,ml
+Classical Mandaic,myz
+Manichaean Middle Persian,xmn
+Manipuri,mni
+Mende,men
+Meroitic,xmr
+Marathi,mr
+Mongolian,mn
+Manchu,mnc
+Mru,mro
+Burmese,my
+Khamti,kht
+Mon,mnw
+Shan,shn
+Pali,pi
+Bambara,bm
+Mandingo,man
+N’Ko,nqo
+Aramaic,arc
+Lü,khb
+Kuvi,kxv
+Odia,or
+Santali,sat
+Old Irish,sga
+Santali,sat
+Etruscan,ett
+Oscan,osc
+Umbrian,xum
+Ancient North Arabian,xna
+Komi,kv
+Old Persian,peo
+Sabaean,xsa
+Old Turkish,otk
+Osage,osa
+Somali,so
+Hmong,hmn
+Aramaic,arc
+Mongolian,mn
+Chinese,zh
+Phoenician,phn
+Large Flowery Miao,hmd
+Pahlavi,pal
+Rejang,rej
+German,de
+Old Norse,non
+Samaritan Aramaic,sam
+Samaritan,smp
+Saurashtra,saz
+Sanskrit,sa
+English,en
+Sanskrit,sa
+Hakka Chinese,hak
+Min Nan Chinese,nan
+Cantonese,yue
+Chinese,zh
+Gan Chinese,gan
+Xiang Chinese,hsn
+Wu Chinese,wuu
+Zhuang,za
+Literary Chinese,lzh
+Sinhala,si
+Pali,pi
+Sanskrit,sa
+Sora,srb
+Akkadian,akk
+Hittite,hit
+Sundanese,su
+Sylheti,syl
+Arabic,ar
+Assyrian Neo-Aramaic,aii
+Syriac,syr
+Turoyo,tru
+Filipino,fil
+Tagbanwa,tbw
+Tai Nüa,tdd
+Tai Dam,blt
+Dogri,doi
+Tamil,ta
+Badaga,bfq
+Gondi,gon
+Kuvi,kxv
+Lambadi,lmn
+Telugu,te
+Waddar,wbq
+Divehi,dv
+Thai,th
+Kuy,kdt
+Northern Khmer,kxm
+Western Lawa,lcp
+Eastern Lawa,lwl
+Southern Thai,sou
+Northeastern Thai,tts
+Pali,pi
+Dzongkha,dz
+Balti,bft
+Tibetan,bo
+Eastern Tamang,taj
+Western Tamang,tdg
+Tshangla,tsj
+Central Atlas Tamazight,tzm
+Riffian,rif
+Tachelhit,shi
+Zenaga,zen
+Standard Moroccan Tamazight,zgh
+Maithili,mai
+Hakka Chinese,hak
+Min Nan Chinese,nan
+Cantonese,yue
+Chinese,zh
+Ugaritic,uga
+Chipewyan,chp
+Cree,cr
+Southern East Cree,crj
+Plains Cree,crk
+Northern East Cree,crl
+Moose Cree,crm
+Swampy Cree,csw
+Slave,den
+Inuktitut,iu
+Naskapi,nsk
+Ojibwa,oj
+Oji-Cree,ojs
+American Sign Language,ase
+Dazaga,dzg
+Fanti,fat
+Southern Haida,hax
+Kanembu,kbl
+Louisiana Creole,lou
+Saamia,lsm
+Maba,mde
+Myene,mye
+Northwestern Ojibwa,ojb
+Central Ojibwa,ojc
+Ngambay,sba
+Serbo-Croatian,sh
+Chadian Arabic,shu
+Southern Lushootseed,slh
+Straits Salish,str
+Southern Tutchone,tce
+Tagish,tgx
+Tahltan,tht
+Tagalog,tl
+Northern Tutchone,ttm
+Twi,tw
+Vai,vai
+Ho,hoc
+Sichuan Yi,ii
