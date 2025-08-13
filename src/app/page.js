@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ComboBox from "./components/ComboBox";
 
 const extractionOptions = ["Months", "Days", "Numbers", "Dates", "Other"];
 
@@ -73,6 +74,10 @@ function FileDropzone({ label, file, setFile }) {
 
 export default function HomePage() {
   const [language, setLanguage] = useState("");
+  const [selectedLang, setSelectedLang] = useState({
+    language: "",
+    code: "und",
+  });
   const [extractionElement, setExtractionElement] = useState("");
   const [otherElement, setOtherElement] = useState("");
   const [englishFile, setEnglishFile] = useState(null);
@@ -184,6 +189,8 @@ export default function HomePage() {
           onSubmit={handleSubmit}
           style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
         >
+          {/* ComboBox TESTING GROUNDS */}
+          <ComboBox onChange={(val) => setSelectedLang(val)}></ComboBox>
           {/* Language input */}
           <label style={{ fontWeight: "bold" }}>
             Target Language:
