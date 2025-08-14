@@ -5,10 +5,12 @@ export default function FirstVisitModal({ agreed, setAgreed }) {
   const [step, setStep] = useState(1); // 1 = checkbox screen, 2 = X-close screen
 
   useEffect(() => {
-    if (!agreed) {
+    const hasSeenModal = localStorage.getItem("hasSeenModal");
+    if (!hasSeenModal) {
       setIsOpen(true);
+      localStorage.setItem("hasSeenModal", "true"); // Mark as seen
     }
-  }, [agreed]);
+  }, []);
 
   const handleCheckboxChange = (e) => {
     if (e.target.checked) {
@@ -39,7 +41,7 @@ export default function FirstVisitModal({ agreed, setAgreed }) {
                 marginBottom: "1rem",
               }}
             >
-              The outputs of MILQSHAKE are not 100% correct. They are based on
+              The outputs of MILQSHAKE are not 100% accurate. They are based on
               probabilistic inferences, which extract the most likely pairings
               of target terms from the corpora. For more information, please see
               the info page.

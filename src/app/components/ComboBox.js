@@ -49,7 +49,7 @@ export default function ComboBox({ onChange }) {
   return (
     <div style={{ position: "relative", width: "100%" }}>
       <label style={{ fontWeight: "bold" }}>
-        Target Language (Combo Box):
+        Target Language:
         <input
           type="text"
           value={inputValue}
@@ -89,7 +89,7 @@ export default function ComboBox({ onChange }) {
           {filteredOptions.slice(0, maxVisible).map((languageName) => (
             <li
               key={languageName}
-              onClick={() =>
+              onMouseDown={() =>
                 handleSelect([languageName, languages[languageName]])
               }
               style={{ padding: "0.5rem", cursor: "pointer" }}

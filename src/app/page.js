@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ComboBox from "./components/ComboBox";
 import FirstVisitModal from "./components/FirstVisitModal";
+import { OrbitProgress } from "react-loading-indicators";
 
 const extractionOptions = ["Months", "Days", "Numbers", "Dates", "Other"];
 
@@ -74,7 +75,6 @@ function FileDropzone({ label, file, setFile }) {
 }
 
 export default function HomePage() {
-  const [language, setLanguage] = useState("");
   const [selectedLang, setSelectedLang] = useState({
     language: "",
     code: "und",
@@ -88,6 +88,7 @@ export default function HomePage() {
   const [message, setMessage] = useState("");
   const [scriptType, setScriptType] = useState("");
   const [disclaimerChecked, setDisclaimerChecked] = useState(false);
+  const [popup, setPopup] = useState(false);
 
   useEffect(() => {
     // Load saved agreement if exists
@@ -104,7 +105,7 @@ export default function HomePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!language) return setMessage("Please enter a language.");
+    if (!selectedLang) return setMessage("Please enter a language.");
     if (!extractionElement)
       return setMessage("Please select an extraction element.");
     if (extractionElement === "Other" && !otherElement.trim())
@@ -121,7 +122,7 @@ export default function HomePage() {
       "extractionElement",
       extractionElement === "Other" ? otherElement : extractionElement
     );
-    formData.append("language", language);
+    formData.append("language", selectedLang.language); //lang code is also available via selectedLang.code
     formData.append("scriptType", scriptType);
     formData.append("englishFile", englishFile);
     formData.append("targetFile", targetFile);
@@ -143,6 +144,13 @@ export default function HomePage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePopupClick = () => {
+    setPopup(!popup);
+  };
+  const handlePopupClose = () => {
+    setPopup(false);
   };
 
   return (
@@ -196,74 +204,65 @@ export default function HomePage() {
             style={{ marginTop: "-0.5rem" }} // lift the logo slightly
           />
         </div>
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
-        >
-          {/* ComboBox TESTING GROUNDS */}
-          <ComboBox onChange={(val) => setSelectedLang(val)}></ComboBox>
+        {/*Content that gets displayed if loading is true*/}
+        {loading ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: "10rem",
+            }}
+          >
+            <text style={{ marginBottom: "2rem" }}>
+              Getting your target terms...
+            </text>
 
-          {/* Language input */}
-          <label style={{ fontWeight: "bold" }}>
-            Target Language:
-            <input
-              type="text"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              placeholder="Enter target language"
-              required
+            <OrbitProgress variant="track-disc" color="#000000" size="medium" />
+            {/*Performative button for loading screen */}
+            <button
+              type="submit"
+              disabled={loading}
               style={{
+                display: "flex",
                 width: "100%",
-                padding: "0.5rem",
-                marginTop: "0.25rem",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                fontSize: "1rem",
-                fontFamily: "Arial",
-                backgroundColor: "white",
-              }}
-            />
-          </label>
-
-          {/* Extraction Elements dropdown */}
-          <label style={{ fontWeight: "bold" }}>
-            Target Terms:
-            <select
-              value={extractionElement}
-              onChange={handleExtractionChange}
-              required
-              style={{
-                width: "100%",
-                padding: "0.5rem",
-                marginTop: "0.25rem",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                fontSize: "1rem",
-                fontFamily: "Arial",
-                backgroundColor: "white",
-                color: extractionElement === "" ? "gray" : "black",
+                padding: "0.75rem",
+                fontWeight: "bold",
+                backgroundColor: "#4da6ff",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                fontSize: "1.1rem",
+                cursor: loading ? "not-allowed" : "pointer",
+                marginTop: "1rem",
+                justifyContent: "center",
               }}
             >
-              <option value="" disabled>
-                Select an element
-              </option>
-              {extractionOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
-          </label>
+              {loading ? "Processing..." : "Upload & Parse"}
+            </button>
+          </div>
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+          >
+            {/* Target Language ComboBox */}
+            <ComboBox onChange={(val) => setSelectedLang(val)}></ComboBox>
 
-          {/* Other input appears if "Other" selected */}
-          {extractionElement === "Other" && (
+            {/* Hidden input for passing to backend */}
+            <input
+              type="hidden"
+              name="language"
+              value={selectedLang.language}
+            />
+
+            {/* Extraction Elements dropdown */}
             <label style={{ fontWeight: "bold" }}>
-              Insert Custom Regex:
-              <input
-                type="text"
-                value={otherElement}
-                onChange={(e) => setOtherElement(e.target.value)}
-                placeholder="Type your extraction regex"
+              Target Terms:
+              <select
+                value={extractionElement}
+                onChange={handleExtractionChange}
                 required
                 style={{
                   width: "100%",
@@ -274,95 +273,186 @@ export default function HomePage() {
                   fontSize: "1rem",
                   fontFamily: "Arial",
                   backgroundColor: "white",
+                  color: extractionElement === "" ? "gray" : "black",
                 }}
-              />
+              >
+                <option value="" disabled>
+                  Select an element
+                </option>
+                {extractionOptions.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
             </label>
-          )}
 
-          {/* Script type selector */}
-          <label style={{ fontWeight: "bold" }}>
-            Script Type:
-            <select
-              value={scriptType}
-              onChange={(e) => setScriptType(e.target.value)}
-              required
+            {/* Other input appears if "Other" selected */}
+            {extractionElement === "Other" && (
+              <label style={{ fontWeight: "bold" }}>
+                Insert Custom Regex:
+                <input
+                  type="text"
+                  value={otherElement}
+                  onChange={(e) => setOtherElement(e.target.value)}
+                  placeholder="Type your extraction regex"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "0.5rem",
+                    marginTop: "0.25rem",
+                    borderRadius: "4px",
+                    border: "1px solid #ccc",
+                    fontSize: "1rem",
+                    fontFamily: "Arial",
+                    backgroundColor: "white",
+                  }}
+                />
+              </label>
+            )}
+
+            {/* Script type selector */}
+            <label style={{ fontWeight: "bold" }}>
+              Script Type:
+              <select
+                value={scriptType}
+                onChange={(e) => setScriptType(e.target.value)}
+                required
+                style={{
+                  width: "100%",
+                  padding: "0.5rem",
+                  marginTop: "0.25rem",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                  fontSize: "1rem",
+                  fontFamily: "Arial",
+                  backgroundColor: "white",
+                  color: scriptType === "" ? "gray" : "black",
+                }}
+              >
+                <option value="" disabled>
+                  Select an element
+                </option>
+                <option value="Latin">Latin</option>
+                <option value="Devanagari">Devanagari</option>
+                <option value="Arabic">Arabic</option>
+                <option value="Bengali">Bengali</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Cyrillic">Cyrillic</option>
+                <option value="Other-script">Other</option>
+              </select>
+            </label>
+
+            {/* File upload boxes side by side */}
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+              <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem" }}>
+                <FileDropzone
+                  label="English language file"
+                  file={englishFile}
+                  setFile={setEnglishFile}
+                />
+              </div>
+              <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem" }}>
+                <FileDropzone
+                  label="Target language file"
+                  file={targetFile}
+                  setFile={setTargetFile}
+                />
+              </div>
+            </div>
+
+            {popup && (
+              <div
+                style={{
+                  top: "100%",
+                  left: 0,
+                  marginTop: "0.5rem",
+                  backgroundColor: "white",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
+                  zIndex: 10,
+                  minWidth: "150px",
+                }}
+              >
+                {/* Close button */}
+                <div style={{ display: "flex", justifyContent: "right" }}>
+                  <button
+                    onClick={handlePopupClose}
+                    style={{
+                      display: "flex",
+                      top: "10%",
+                      right: "85%",
+                      border: "none",
+                      background: "transparent",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                      fontSize: "1rem",
+                      paddingRight: "0.5rem",
+                    }}
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div
+                  style={{
+                    color: "#454545",
+                    paddingRight: "1rem",
+                    paddingLeft: "1rem",
+                    paddingBottom: "1rem",
+                  }}
+                >
+                  The outputs of MILQSHAKE are not 100% accurate. They are based
+                  on probabilistic inferences, which extract the most likely
+                  pairings of target terms from the corpora. For more
+                  information, please see the info page.
+                </div>
+              </div>
+            )}
+
+            {/*Disclaimer button and acknowledgement text */}
+            <label style={{ display: "block", margin: "1rem 0" }}>
+              <input
+                type="checkbox"
+                checked={disclaimerChecked}
+                onChange={(e) => setDisclaimerChecked(e.target.checked)}
+                required
+              />{" "}
+              I have read and agree to the{" "}
+              <span
+                onClick={handlePopupClick}
+                style={{
+                  color: "blue",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+              >
+                disclaimer
+              </span>
+              .
+            </label>
+
+            {/* Submit button */}
+            <button
+              type="submit"
+              disabled={loading}
               style={{
-                width: "100%",
-                padding: "0.5rem",
-                marginTop: "0.25rem",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                fontSize: "1rem",
-                fontFamily: "Arial",
-                backgroundColor: "white",
-                color: scriptType === "" ? "gray" : "black",
+                padding: "0.75rem",
+                fontWeight: "bold",
+                backgroundColor: "#4da6ff",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                fontSize: "1.1rem",
+                cursor: loading ? "not-allowed" : "pointer",
+                marginTop: "1rem",
               }}
             >
-              <option value="" disabled>
-                Select an element
-              </option>
-              <option value="Latin">Latin</option>
-              <option value="Devanagari">Devanagari</option>
-              <option value="Arabic">Arabic</option>
-              <option value="Bengali">Bengali</option>
-              <option value="Chinese">Chinese</option>
-              <option value="Cyrillic">Cyrillic</option>
-              <option value="Other-script">Other</option>
-            </select>
-          </label>
-
-          {/* File upload boxes side by side */}
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem" }}>
-              <FileDropzone
-                label="English language file"
-                file={englishFile}
-                setFile={setEnglishFile}
-              />
-            </div>
-            <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem" }}>
-              <FileDropzone
-                label="Target language file"
-                file={targetFile}
-                setFile={setTargetFile}
-              />
-            </div>
-          </div>
-          <label style={{ display: "block", margin: "1rem 0" }}>
-            <input
-              type="checkbox"
-              checked={disclaimerChecked}
-              onChange={(e) => setDisclaimerChecked(e.target.checked)}
-              required
-            />{" "}
-            I have read and agree to the{" "}
-            <Link
-              style={{ textDecoration: "underline", color: "blue" }}
-              href="/disclaimer"
-            >
-              disclaimer
-            </Link>
-            .
-          </label>
-          {/* Submit button */}
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              padding: "0.75rem",
-              fontWeight: "bold",
-              backgroundColor: "#4da6ff",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              fontSize: "1.1rem",
-              cursor: loading ? "not-allowed" : "pointer",
-              marginTop: "1rem",
-            }}
-          >
-            {loading ? "Processing..." : "Upload & Parse"}
-          </button>
-        </form>
+              {loading ? "Processing..." : "Upload & Parse"}
+            </button>
+          </form>
+        )}
 
         {/* Message */}
         {message && (

@@ -1,6 +1,12 @@
 import formidable from "formidable-serverless";
-import { extractTermsFromFiles, generateTranslationComparisonCsv, extractTranslationsOneByOne } from "../../utils/parse";
-import { monthPattern /*, other patterns if needed */ } from "../../utils/constants";
+import {
+  extractTermsFromFiles,
+  generateTranslationComparisonCsv,
+  extractTranslationsOneByOne,
+} from "../../utils/parse";
+import {
+  monthPattern /*, other patterns if needed */,
+} from "../../utils/constants";
 
 export const config = {
   api: { bodyParser: false }, // for file uploads
@@ -34,9 +40,17 @@ export default async function handler(req, res) {
         res.status(400).json({ error: "Only .txt files are accepted." });
         return;
       }
-      
-      if (!language || !extractionElement || !scriptType || !englishFile || !targetFile) {
-        return res.status(400).json({ error: "Missing required fields or files" });
+
+      if (
+        !language ||
+        !extractionElement ||
+        !scriptType ||
+        !englishFile ||
+        !targetFile
+      ) {
+        return res
+          .status(400)
+          .json({ error: "Missing required fields or files" });
       }
 
       // Choose extractor based on extractionElement
@@ -53,17 +67,30 @@ export default async function handler(req, res) {
           extractor = () => new Set(); // or a simple extractor for "Other"
       }
 
-
       // Extract terms from uploaded files
-      const termDict = await extractTermsFromFiles(englishFile, targetFile, extractor);
+      const termDict = await extractTermsFromFiles(
+        englishFile,
+        targetFile,
+        extractor
+      );
 
       // Use your GPT extraction (imported from utils)
-      const { gptResults, topGptResults } = await extractTranslationsOneByOne(termDict, 1400, scriptType);
+      const { gptResults, topGptResults } = await extractTranslationsOneByOne(
+        termDict,
+        1400,
+        scriptType
+      );
 
       // Generate CSV
-      const csvContent = generateTranslationComparisonCsv(termDict, topGptResults);
+      const csvContent = generateTranslationComparisonCsv(
+        termDict,
+        topGptResults
+      );
 
-      res.setHeader("Content-Disposition", `attachment; filename=translations_${language}.csv`);
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=translations_${language}.csv`
+      );
       res.setHeader("Content-Type", "text/csv");
       res.status(200).send(csvContent);
     } catch (error) {
