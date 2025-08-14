@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ComboBox from "./components/ComboBox";
+import FirstVisitModal from "./components/FirstVisitModal";
 
 const extractionOptions = ["Months", "Days", "Numbers", "Dates", "Other"];
 
@@ -88,6 +89,12 @@ export default function HomePage() {
   const [scriptType, setScriptType] = useState("");
   const [disclaimerChecked, setDisclaimerChecked] = useState(false);
 
+  useEffect(() => {
+    // Load saved agreement if exists
+    const saved = localStorage.getItem("userAgreed");
+    if (saved) setDisclaimerChecked(true);
+  }, []);
+
   const handleExtractionChange = (e) => {
     setExtractionElement(e.target.value);
     if (e.target.value !== "Other") {
@@ -150,6 +157,10 @@ export default function HomePage() {
         justifyContent: "center",
       }}
     >
+      <FirstVisitModal
+        agreed={disclaimerChecked}
+        setAgreed={setDisclaimerChecked}
+      />
       <main
         style={{
           maxWidth: "800px",
@@ -191,6 +202,7 @@ export default function HomePage() {
         >
           {/* ComboBox TESTING GROUNDS */}
           <ComboBox onChange={(val) => setSelectedLang(val)}></ComboBox>
+
           {/* Language input */}
           <label style={{ fontWeight: "bold" }}>
             Target Language:
