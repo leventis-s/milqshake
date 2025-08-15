@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+import NavMenu from "./components/NavMenu"; // ✅ import your NavMenu
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,15 +22,7 @@ export default function Layout({ children }) {
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         {/* Navigation - appears on every page */}
-        <nav
-          style={{
-            marginLeft: "2rem",
-            marginTop: "2rem",
-            background: "#fffde7",
-          }}
-        >
-          <Link href="/">Home</Link> | <Link href="/info">Info</Link>
-        </nav>
+        <NavMenu />
 
         {/* Page-specific content */}
         <main style={{ padding: "1rem" }}>{children}</main>

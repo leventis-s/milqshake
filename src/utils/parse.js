@@ -61,7 +61,7 @@ export function isFuzzyMatch(
     const score = stringSimilarity.compareTwoStrings(normPred, normTarget);
     if (score >= threshold) return true;
   
-    if (script === "latin") {
+    if (script === "Latin") {
       const [predMeta] = doubleMetaphone(normPred);
       const [targetMeta] = doubleMetaphone(normTarget);
   
@@ -116,7 +116,7 @@ export function filterResults(dataDict) {
     return cleaned;
   }
 
-export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptType = "latin") {
+export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptType = "Latin") {
     const gptResults = {};
     const topGptResults = {};
   

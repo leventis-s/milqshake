@@ -1,75 +1,67 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import languages from "../../data/langcodes.json";
 
-export default function ComboBox({ onChange }) {
-  const [inputValue, setInputValue] = useState("");
+export default function ComboBox({ value, onChange }) {
+  const [inputValue, setInputValue] = useState(value || "");
   const [filteredOptions, setFilteredOptions] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
   const maxVisible = 7;
 
+  // Sync inputValue with parent
+  useEffect(() => {
+    setInputValue(value || "");
+  }, [value]);
+
   function handleChange(e) {
-    const value = e.target.value;
-    setInputValue(value);
+    const val = e.target.value;
+    setInputValue(val);
+    setShowDropdown(true);
 
     const filtered = Object.keys(languages).filter((languageName) =>
-      languageName.toLowerCase().includes(value.toLowerCase())
+      languageName.toLowerCase().includes(val.toLowerCase())
     );
     setFilteredOptions(filtered);
 
     const exactMatch = Object.entries(languages).find(
-      ([languageName]) => languageName.toLowerCase() === value.toLowerCase()
+      ([languageName]) => languageName.toLowerCase() === val.toLowerCase()
     );
 
     onChange(
       exactMatch
         ? { language: exactMatch[0], code: exactMatch[1] }
-        : { language: value, code: "und" }
+        : { language: val, code: "und" }
     );
   }
 
-  function handleSelect([languageName, code]) {
+  function handleSelect(languageName) {
     setInputValue(languageName);
     setFilteredOptions([]);
-    onChange({ language: languageName, code }); // Save selection up to parent
-  }
-
-  function handleBlur() {
-    const match = Object.entries(languages).find(
-      ([languageName]) =>
-        languageName.toLowerCase() === inputValue.toLowerCase()
-    );
-
-    onChange(
-      match
-        ? { language: match[0], code: match[1] }
-        : { language: inputValue, code: "und" }
-    );
-    setFilteredOptions([]);
+    setShowDropdown(false);
+    onChange({ language: languageName, code: languages[languageName] });
   }
 
   return (
     <div style={{ position: "relative", width: "100%" }}>
-      <label style={{ fontWeight: "bold" }}>
-        Target Language (Combo Box):
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder="Type or select..."
-          style={{
-            width: "100%",
-            padding: "0.5rem",
-            marginTop: "0.25rem",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-            fontSize: "1rem",
-            fontFamily: "Arial",
-            backgroundColor: "white",
-            color: "black",
-          }}
-        />
-      </label>
-      {inputValue.length > 0 && filteredOptions.length > 0 && (
+      Target Langauge:
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleChange}
+        onFocus={() => setShowDropdown(true)}
+        placeholder="Type or select..."
+        style={{
+          width: "100%",
+          padding: "0.5rem",
+          marginTop: "0.25rem",
+          borderRadius: "4px",
+          border: "1px solid #ccc",
+          fontSize: "1rem",
+          fontFamily: "Arial",
+          backgroundColor: "white",
+          color: "black",
+        }}
+      />
+      {showDropdown && filteredOptions.length > 0 && (
         <ul
           style={{
             position: "absolute",
@@ -89,25 +81,14 @@ export default function ComboBox({ onChange }) {
           {filteredOptions.slice(0, maxVisible).map((languageName) => (
             <li
               key={languageName}
-              onClick={() =>
-                handleSelect([languageName, languages[languageName]])
-              }
+              onMouseDown={() => handleSelect(languageName)} // use onMouseDown to prevent blur
               style={{ padding: "0.5rem", cursor: "pointer" }}
             >
               {languageName}
             </li>
           ))}
-
           {filteredOptions.length > maxVisible && (
-            <li
-              style={{
-                paddingLeft: "0.5rem",
-                color: "gray",
-                cursor: "default",
-              }}
-            >
-              ...
-            </li>
+            <li style={{ paddingLeft: "0.5rem", color: "gray" }}>...</li>
           )}
         </ul>
       )}

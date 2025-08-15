@@ -72,6 +72,55 @@ function FileDropzone({ label, file, setFile }) {
   );
 }
 
+function DisclaimerModal({ onAccept }) {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "rgba(0,0,0,0.6)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 1000,
+      }}
+    >
+      <div
+        style={{
+          background: "white",
+          padding: "2rem",
+          borderRadius: "10px",
+          maxWidth: "500px",
+          textAlign: "center",
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        <h2 style={{ marginBottom: "1rem", fontWeight: "bold", fontSize: "1.5rem", color: "#4da6ff"}}>Disclaimer</h2>
+        <p style={{ marginBottom: "1rem" }}>
+          By using this tool, you understand that the extracted data may contain errors. It is intended to support work within a language community, not replace it. Please note that data is not fully protected and may be shared with ChatGPT for processing.
+        </p>
+        <button
+          onClick={onAccept}
+          style={{
+            padding: "0.75rem 1.5rem",
+            backgroundColor: "#4da6ff",
+            color: "white",
+            fontWeight: "bold",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+        >
+          I Understand
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   const [language, setLanguage] = useState("");
   const [selectedLang, setSelectedLang] = useState({
@@ -86,7 +135,7 @@ export default function HomePage() {
   const [csvUrl, setCsvUrl] = useState("");
   const [message, setMessage] = useState("");
   const [scriptType, setScriptType] = useState("");
-  const [disclaimerChecked, setDisclaimerChecked] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(true)
 
   const handleExtractionChange = (e) => {
     setExtractionElement(e.target.value);
@@ -141,7 +190,7 @@ export default function HomePage() {
   return (
     <div
       style={{
-        backgroundColor: "#fffde7", // light cream
+        backgroundColor: "#fffde7",
         minHeight: "100vh",
         padding: "2rem 1rem",
         fontFamily: "Arial Black, Arial, sans-serif",
@@ -150,13 +199,17 @@ export default function HomePage() {
         justifyContent: "center",
       }}
     >
+      {showDisclaimer && <DisclaimerModal onAccept={() => setShowDisclaimer(false)} />}
+
       <main
         style={{
           maxWidth: "800px",
           width: "100%",
-          backgroundColor: "#fffde7", // keep form area white
+          backgroundColor: "#fffde7",
           padding: "2rem",
           borderRadius: "8px",
+          opacity: showDisclaimer ? 0.3 : 1,
+          pointerEvents: showDisclaimer ? "none" : "auto",
         }}
       >
         {/* Header with text + logo */}
@@ -190,28 +243,12 @@ export default function HomePage() {
           style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
         >
           {/* ComboBox TESTING GROUNDS */}
-          <ComboBox onChange={(val) => setSelectedLang(val)}></ComboBox>
-          {/* Language input */}
-          <label style={{ fontWeight: "bold" }}>
-            Target Language:
-            <input
-              type="text"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              placeholder="Enter target language"
-              required
-              style={{
-                width: "100%",
-                padding: "0.5rem",
-                marginTop: "0.25rem",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                fontSize: "1rem",
-                fontFamily: "Arial",
-                backgroundColor: "white",
-              }}
-            />
-          </label>
+          <ComboBox
+            onChange={(val) => {
+              setSelectedLang(val);
+              setLanguage(val.language); // keep the string in sync for handleSubmit
+            }}
+          />
 
           {/* Extraction Elements dropdown */}
           <label style={{ fontWeight: "bold" }}>
@@ -316,22 +353,6 @@ export default function HomePage() {
               />
             </div>
           </div>
-          <label style={{ display: "block", margin: "1rem 0" }}>
-            <input
-              type="checkbox"
-              checked={disclaimerChecked}
-              onChange={(e) => setDisclaimerChecked(e.target.checked)}
-              required
-            />{" "}
-            I have read and agree to the{" "}
-            <Link
-              style={{ textDecoration: "underline", color: "blue" }}
-              href="/disclaimer"
-            >
-              disclaimer
-            </Link>
-            .
-          </label>
           {/* Submit button */}
           <button
             type="submit"
