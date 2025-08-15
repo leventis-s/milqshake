@@ -34,7 +34,7 @@ const escapedNames = relativeTimeNames.map(escapeRegex);
 
 const relTimePattern = `(?<!\\w)(?:${escapedNames.join('|')})(?![\\w'])`;
 
-const relativeTimePattern = new RegExp(relTimePattern, 'i'); // case-insensitive
+export const relativeTimePattern = new RegExp(relTimePattern, 'i'); // case-insensitive
 
 export const weekdayPattern = new RegExp(
   `\\b(?:${WEEKDAY_NAMES.join("|")})\\b(?!'s)`,
