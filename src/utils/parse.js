@@ -105,8 +105,8 @@ export function filterResults(dataDict) {
   
       const totalAttempts = keptWords.length + skippedSameAsKey.length;
   
-      if (totalAttempts > 0 && skippedSameAsKey.length / totalAttempts >= 0.9) {
-        console.log(`✅ Keeping '${normKey[0].toUpperCase() + normKey.slice(1)}' for ${key} since ≥90% were identical`);
+      if (totalAttempts > 0 && skippedSameAsKey.length / totalAttempts >= 0.6) {
+        console.log(`✅ Keeping '${normKey[0].toUpperCase() + normKey.slice(1)}' for ${key} since ≥60% were identical`);
         keptWords.push(...skippedSameAsKey);
       }
   
