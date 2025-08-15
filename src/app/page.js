@@ -2,10 +2,9 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import ComboBox from "./components/ComboBox";
 
-const extractionOptions = ["Months", "Days", "Numbers", "Dates", "Other"];
+const extractionOptions = ["Months", "Days of the Week", "Time Vocabulary", "Relative Time Vocabulary", "Other/Custom"];
 
 function FileDropzone({ label, file, setFile }) {
   const [dragOver, setDragOver] = useState(false);
@@ -231,11 +230,11 @@ export default function HomePage() {
             MILQSHAKE
           </h1>
           <Image
-            src="/milqshake-logo.png"
+            src="/milqshake_transparent.png"
             alt="Milqshake logo"
             width={80}
             height={80}
-            style={{ marginTop: "-0.5rem" }} // lift the logo slightly
+            style={{ marginTop: "-.8rem" }} // lift the logo slightly
           />
         </div>
         <form

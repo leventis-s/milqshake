@@ -26,11 +26,11 @@ export default function InfoPage() {
           MILQSHAKE
         </h1>
         <Image
-          src="/milqshake-logo.png"
+          src="/milqshake_transparent.png"
           alt="Milqshake logo"
           width={80}
           height={80}
-          style={{ marginTop: "1.6rem" }} // match ContactPage alignment
+          style={{ marginTop: ".9rem" }} // match ContactPage alignment
         />
         </div>
 

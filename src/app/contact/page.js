@@ -17,16 +17,16 @@ export default function ContactPage() {
       return;
     }
 
-    // Create mailto link
     const mailtoLink = `mailto:samanthaleventis@stanford.edu?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\n\n${message}`
     )}`;
 
-    // Open default email client
     window.location.href = mailtoLink;
-    setStatus("Your email client should open. If not, please send manually to samanthaleventis@stanford.edu.");
+    setStatus(
+      "Your email client should open. If not, please send manually to samanthaleventis@stanford.edu."
+    );
   };
 
   return (
@@ -35,7 +35,7 @@ export default function ContactPage() {
         backgroundColor: "#fffde7",
         minHeight: "100vh",
         padding: "2rem 1rem",
-        fontFamily: "Arial Black, Arial, sans-serif",
+        fontFamily: "Arial, sans-serif", // normal text uses Arial
         color: "#222",
         display: "flex",
         justifyContent: "center",
@@ -62,20 +62,46 @@ export default function ContactPage() {
             marginBottom: "2rem",
           }}
         >
-          <h1 style={{ fontSize: "3rem", color: "#4da6ff" }}>MILQSHAKE</h1>
+          <h1
+            style={{
+              fontSize: "3rem",
+              color: "#4da6ff",
+              fontFamily: "Arial Black, Arial, sans-serif", // bold heading
+            }}
+          >
+            MILQSHAKE
+          </h1>
           <Image
-            src="/milqshake-logo.png"
+            src="/milqshake_transparent.png"
             alt="Milqshake logo"
             width={80}
             height={80}
-            style={{ marginTop: "-0.5rem" }}
+            style={{ marginTop: "-.75rem" }}
           />
         </div>
 
-        <h2 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>Contact Us</h2>
-        <p style={{ marginBottom: "1.5rem" }}>
-          We would love to hear from you! For technical difficulties, media inquiries, or other questions, please use the form below or send an email directly to{" "}
-          <a href="mailto:samanthaleventis@stanford.edu" style={{ color: "#4da6ff", textDecoration: "underline" }}>
+        <h2
+          style={{
+            fontSize: "1.5rem",
+            marginBottom: "1rem",
+            fontFamily: "Arial Black, Arial, sans-serif", // bold heading
+          }}
+        >
+          Contact Us
+        </h2>
+
+        <p style={{ marginBottom: "1.5rem", fontWeight: "normal", fontFamily: "Arial, sans-serif" }}>
+          We would love to hear from you! For technical difficulties, media inquiries, or other
+          questions, please use the form below or send an email directly to{" "}
+          <a
+            href="mailto:samanthaleventis@stanford.edu"
+            style={{
+              color: "#4da6ff",
+              textDecoration: "underline",
+              fontWeight: "normal",
+              fontFamily: "Arial, sans-serif",
+            }}
+          >
             samanthaleventis@stanford.edu
           </a>
           .

@@ -1,6 +1,6 @@
 import formidable from "formidable-serverless";
 import { extractTermsFromFiles, generateTranslationComparisonCsv, extractTranslationsOneByOne, filterTemporalSeconds, inferSingularWithGPT } from "../../utils/parse";
-import { monthPattern, weekdayPattern, timePatternAll, time_vocab_singular } from "../../utils/constants";
+import { monthPattern, weekdayPattern, timePatternAll, time_vocab_singular , relativeTimePattern} from "../../utils/constants";
 
 export const config = {
   api: { bodyParser: false }, // for file uploads
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
       }
 
       // Choose extractor based on extractionElement
-      const predefinedExtractionElements = new Set(["months", "days", "time", "numbers", "dates", "other"]);
+      const predefinedExtractionElements = new Set(["months", "days of the week", "time vocabulary", "relative time vocabulary", "other/custom"]);
       let extractor;
       let csvContent;
 
@@ -64,30 +64,21 @@ export default async function handler(req, res) {
               return new Set(matches || []);
             };
             break;
-          // add more cases like "days", "numbers" etc.
-          case "days":
+          case "days of the week":
             extractor = (sentence) => {
               const matches = sentence.match(weekdayPattern);
               return new Set(matches || []);
             };
             break;
-          // Actually for time words
-          case "numbers":
+          case "time vocabulary":
             extractor = (sentence) => {
               const matches = sentence.match(timePatternAll);
               return new Set(matches || []);
             };
             break;
-          case "numbers":
+          case "relative time vocabulary":
             extractor = (sentence) => {
-              const matches = sentence.match(timePatternAll);
-              return new Set(matches || []);
-            };
-            break;
-          // Actually for relative time words
-          case "dates":
-            extractor = (sentence) => {
-              const matches = sentence.match(timePatternAll);
+              const matches = sentence.match(relativeTimePattern);
               return new Set(matches || []);
             };
             break;
