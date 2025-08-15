@@ -1,9 +1,7 @@
 import { doubleMetaphone } from "double-metaphone";
 import unidecode from "unidecode";
 import stringSimilarity from "string-similarity"; // for fuzzy matching
-import { MONTH_NAMES, monthPattern, weekdayPattern, WEEKDAY_NAMES} from "./constants";
 import { client } from "./openaiClient";
-import { stringify } from "csv-stringify/sync";
 import fs from "fs/promises";
 
 
@@ -208,6 +206,8 @@ export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptT
           )
           .map(([word]) => word)
           .slice(0, 4);
+        variants = variants.filter(v => v && v.toLowerCase() !== "none");
+
       }
   
       topGptResults[key] = {
@@ -225,7 +225,7 @@ export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptT
       console.log("\n" + "-".repeat(40) + "\n");
     }
   
-    return { gptResults, topGptResults };
+    return { topGptResults };
   }  
 
 /**
@@ -270,14 +270,109 @@ export async function extractTermsFromFiles(engFile, targetFile, extractFunc) {
     return termDict;
   }
 
-export function generateTranslationComparisonCsv(extractionKeys, gptSummary) {
+export function generateTranslationComparisonCsv(gptSummary) {
     let csvContent = "Term,Confidence,Variants,Canonical\n";
   
     for (const term of Object.keys(gptSummary)) {
       const { confidence, variants, canonical } = gptSummary[term];
-      const variantsStr = variants.length > 0 ? variants.join(", ") : "None";
+      const variantsArr = Array.isArray(variants) ? variants : [];
+      const variantsStr = variantsArr.length > 0 ? variantsArr.join(", ") : "-";
       csvContent += `"${term}",${(confidence * 100).toFixed(1)},"${variantsStr}","${canonical}"\n`;
     }
   
     return csvContent;
   }
+
+async function isTemporalSecondGPT(sentence) {
+    const prompt = `
+  In the sentence below, is the word 'second' used to refer to a **unit of time** 
+  (meaning 1/60th of a minute), and **not** as an ordinal (like 2nd place or second try)?
+  
+  Answer with 'Yes' or 'No'.
+  
+  Sentence: ${sentence}
+  `;
+  
+    const response = await client.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0,
+    });
+  
+    const answer = response.choices[0].message.content.trim().toLowerCase();
+    return answer.includes("yes");
+  }
+
+export async function filterTemporalSeconds(termDict) {
+  if (!termDict["second"]) return termDict; // nothing to filter
+
+  const filteredSecondEntries = {};
+
+  for (const [engSent, tgtSentArray] of Object.entries(termDict["second"])) {
+    const filteredTgts = [];
+    for (const tgtSent of tgtSentArray) {
+      const isTemporal = await isTemporalSecondGPT(tgtSent); // pass tgtSent as sentence
+      if (isTemporal) filteredTgts.push(tgtSent);
+    }
+    if (filteredTgts.length > 0) {
+      filteredSecondEntries[engSent] = filteredTgts;
+    }
+  }
+
+  // Replace with filtered entries
+  return {
+    ...termDict,
+    second: filteredSecondEntries,
+  };
+}
+
+export async function inferSingularWithGPT(baseWord, singularCandidates, pluralCandidates) {
+    // Combine candidates and count frequency
+    const allCandidates = [...new Set([...singularCandidates, ...pluralCandidates].filter(Boolean))];
+  
+    // Prepare candidate lines for prompt
+    const candidateLines = allCandidates
+      .map(word => `- "${word}":`) // counts not included since JS doesn't have Counter; can be improved if needed
+      .join("\n");
+  
+    const prompt = `
+  You are a multilingual linguist assistant.
+  
+  The English word is: "${baseWord}", a singular time-related noun (e.g., day, week, year).
+  
+  Here are words that were extracted as possible translations of "${baseWord}" and "${baseWord}s" in another language:
+  
+  ${baseWord} candidates: ${JSON.stringify(singularCandidates)}
+  ${baseWord}s candidates: ${JSON.stringify(pluralCandidates)}
+  
+  What is most likely translation of ${baseWord} in the target language?
+  
+  Please respond with only the singular word, and no explanation.
+  `;
+  
+    try {
+      const response = await client.chat.completions.create({
+        model: "gpt-4",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0,
+      });
+  
+      let singularGuess = response.choices[0].message.content.trim();
+  
+      // Normalize and title-case the guess
+      singularGuess = normalize(singularGuess); // implement or import normalize
+      singularGuess = singularGuess.charAt(0).toUpperCase() + singularGuess.slice(1).toLowerCase();
+  
+      return singularGuess;
+    } catch (error) {
+      if (error.name === "TimeoutError") {
+        console.log(`Timeout on attempt '${baseWord}', retrying...`);
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        // optionally retry here or return null
+      } else {
+        console.error(`Error inferring singular for ${baseWord}:`, error);
+      }
+      return null;
+    }
+  }
+  
