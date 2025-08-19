@@ -63,9 +63,10 @@ export default function InfoPage() {
             <li>
               <strong>Other / Custom</strong> – Provide a custom regex. Examples:
               <ul style={{ paddingLeft: "1.5rem", listStyleType: "disc" , fontSize: "0.8rem" }}>
-                <li>\d{1,2}/\d{1,2}/\d{2,4} – matches dates like 12/31/2023</li>
                 <li>\b[A-Z][a-z]+ville\b – matches place names ending in “ville”</li>
-                <li>[+-]?\d+(\.\d+)? – matches integers or decimal numbers with optional sign</li>
+                <li>\b\w{5,}\b – matches words with 5 or more letters</li>
+                <li>\b(?:happy|sad|angry|excited)\b – matches specific emotion words</li>
+                <li>\b[A-Za-z]+(?:ing|ed)\b – matches words ending in “ing” or “ed”</li>
               </ul>
             </li>
           </ul>
