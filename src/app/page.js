@@ -6,6 +6,8 @@ import ComboBox from "./components/ComboBox";
 import { DataGrid } from '@mui/x-data-grid';
 import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
+import FloatingInfoHover from "./components/FloatingInfoHover";
+
 
 
 const extractionOptions = ["Months", "Days of the Week", "Time Vocabulary", "Relative Time Vocabulary", "Other/Custom"];
@@ -576,6 +578,7 @@ export default function HomePage() {
         )}
 
       </main>
+      <FloatingInfoHover />
     </div>
   );
 }

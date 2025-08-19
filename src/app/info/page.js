@@ -64,7 +64,7 @@ export default function InfoPage() {
               <strong>Other / Custom</strong> – Provide a custom regex. Examples:
               <ul style={{ paddingLeft: "1.5rem", listStyleType: "disc" , fontSize: "0.8rem" }}>
                 <li>\b[A-Z][a-z]+ville\b – matches place names ending in “ville”</li>
-                <li>\b\w{5,}\b – matches words with 5 or more letters</li>
+                <li>\b\w{5}\b – matches words with 5 or more letters</li>
                 <li>\b(?:happy|sad|angry|excited)\b – matches specific emotion words</li>
                 <li>\b[A-Za-z]+(?:ing|ed)\b – matches words ending in “ing” or “ed”</li>
               </ul>
