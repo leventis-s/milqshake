@@ -271,17 +271,25 @@ export async function extractTermsFromFiles(engFile, targetFile, extractFunc) {
   }
 
 export function generateTranslationComparisonCsv(gptSummary) {
-    let csvContent = "Term,Prevalence,Variants,Canonical\n";
+  // New header
+  let csvContent = "Term,Most Frequent,Frequency,Variants\n";
   
-    for (const term of Object.keys(gptSummary)) {
-      const { confidence, variants, canonical } = gptSummary[term];
-      const variantsArr = Array.isArray(variants) ? variants : [];
-      const variantsStr = variantsArr.length > 0 ? variantsArr.join(", ") : "-";
-      csvContent += `"${term}","${confidence}","${variantsStr}","${canonical}"\n`;
-    }
+  for (const term of Object.keys(gptSummary)) {
+    const { confidence, variants, canonical } = gptSummary[term];
   
-    return csvContent;
+    const mostFrequent = canonical || "-"; // canonical = most frequent
+    const frequency = confidence ?? "-";   // confidence = frequency
+    const variantsArr = Array.isArray(variants)
+      ? variants.filter((v) => v && v.trim())
+      : [];
+    const variantsStr = variantsArr.length > 0 ? variantsArr.join(", ") : "-";
+  
+    csvContent += `"${term}","${mostFrequent}","${frequency}","${variantsStr}"\n`;
   }
+  
+  return csvContent;
+}
+  
 
 async function isTemporalSecondGPT(sentence) {
     const prompt = `
@@ -304,27 +312,26 @@ async function isTemporalSecondGPT(sentence) {
   }
 
 export async function filterTemporalSeconds(termDict) {
-  if (!termDict["second"]) return termDict; // nothing to filter
-
-  const filteredSecondEntries = {};
-
-  for (const [engSent, tgtSentArray] of Object.entries(termDict["second"])) {
-    const filteredTgts = [];
-    for (const tgtSent of tgtSentArray) {
-      const isTemporal = await isTemporalSecondGPT(tgtSent); // pass tgtSent as sentence
-      if (isTemporal) filteredTgts.push(tgtSent);
-    }
-    if (filteredTgts.length > 0) {
-      filteredSecondEntries[engSent] = filteredTgts;
+  // If there is no "second" key, return the dict as-is
+  if (!termDict["second"]) return termDict;
+  
+  const filteredSecondEntries = [];
+  
+  // termDict["second"] is an array of [English sentence, target sentence]
+  for (const [engSent, tgtSent] of termDict["second"]) {
+    const isTemporal = await isTemporalSecondGPT(tgtSent); // check if target sentence is temporal
+    if (isTemporal) {
+      filteredSecondEntries.push([engSent, tgtSent]);
     }
   }
-
-  // Replace with filtered entries
+  
+  // Return the dict with filtered "second" entries, everything else unchanged
   return {
     ...termDict,
     second: filteredSecondEntries,
   };
 }
+  
 
 export async function inferSingularWithGPT(baseWord, singularCandidates, pluralCandidates) {
     // Combine candidates and count frequency

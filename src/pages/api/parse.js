@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     if (err) return res.status(500).json({ error: "Error parsing form data" });
 
     try {
-      const { language, extractionElement, scriptType } = fields;
+      const { language, extractionElement, customRegex, scriptType } = fields;
       console.log("Received files:", files);
       const englishFile = files.englishFile;
       const targetFile = files.targetFile;
@@ -44,10 +44,10 @@ export default async function handler(req, res) {
       let extractor;
       let csvContent;
 
-      if (!predefinedExtractionElements.has(extractionElement.toLowerCase())) {
+      if (extractionElement.toLowerCase() === "other/custom") {
         // Treat as custom regex
         try {
-          const userRegex = new RegExp(extractionElement, "gi"); // 'g' for global, 'i' for case-insensitive
+          const userRegex = new RegExp(customRegex, "gi"); // 'g' for global, 'i' for case-insensitive
       
           extractor = (sentence) => {
             const matches = sentence.match(userRegex);
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
       // Extract terms from uploaded files
       let termDict = await extractTermsFromFiles(englishFile, targetFile, extractor);
 
-      if (extractionElement.toLowerCase() === "time") {
+      if (extractionElement.toLowerCase() === "time vocabulary") {
         termDict = await filterTemporalSeconds(termDict);
       }
 
@@ -98,7 +98,7 @@ export default async function handler(req, res) {
       const { topGptResults } = await extractTranslationsOneByOne(termDict, 1400, scriptType);
 
       // Do different workflow for time
-      if (extractionElement.toLowerCase() === "numbers") {
+      if (extractionElement.toLowerCase() === "time vocabulary") {
         const inferredSingulars = {};
       
         for (const baseWord of time_vocab_singular) {

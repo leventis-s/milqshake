@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/x-data-grid": "^8.10.1",
     "collections": "^5.1.13",
     "csv-stringify": "^6.6.0",
     "double-metaphone": "^2.0.1",

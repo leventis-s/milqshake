@@ -1,10 +1,37 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import ComboBox from "./components/ComboBox";
+import { DataGrid } from '@mui/x-data-grid';
+import Tooltip from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+
 
 const extractionOptions = ["Months", "Days of the Week", "Time Vocabulary", "Relative Time Vocabulary", "Other/Custom"];
+
+const glossaryDefinitions = {
+  "most frequent": "The term's most frequent translation in your corpus.",
+  "frequency": "The number of times this term was translated to the most frequent translation.",
+  "variants": "Other translations detected (e.g., plurals, spelling variations).",
+};
+
+const GlossaryTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} arrow placement="top" />
+))({
+  [`& .MuiTooltip-tooltip`]: {
+    backgroundColor: 'white',
+    color: '#000',
+    fontSize: '1rem',
+    padding: '0.75rem 1rem',
+    borderRadius: '6px',
+    maxWidth: 250,
+    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+  },
+  [`& .MuiTooltip-arrow`]: {
+    color: 'white',
+  },
+});
 
 function FileDropzone({ label, file, setFile }) {
   const [dragOver, setDragOver] = useState(false);
@@ -99,7 +126,7 @@ function DisclaimerModal({ onAccept }) {
       >
         <h2 style={{ marginBottom: "1rem", fontWeight: "bold", fontSize: "1.5rem", color: "#4da6ff"}}>Disclaimer</h2>
         <p style={{ marginBottom: "1rem" }}>
-          By using this tool, you understand that the extracted data may contain errors. It is intended to support work within a language community, not replace it. Please note that data is not fully protected and may be shared with ChatGPT for processing.
+           This tool is intended to support work within a language community, not replace it. By using this tool, you understand that the extracted data may contain errors. Please note that data is not fully protected and may be shared with external sources for processing.
         </p>
         <button
           onClick={onAccept}
@@ -134,7 +161,9 @@ export default function HomePage() {
   const [csvUrl, setCsvUrl] = useState("");
   const [message, setMessage] = useState("");
   const [scriptType, setScriptType] = useState("");
-  const [showDisclaimer, setShowDisclaimer] = useState(true)
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [csvData, setCsvData] = useState([]);
+
 
   const handleExtractionChange = (e) => {
     setExtractionElement(e.target.value);
@@ -143,12 +172,25 @@ export default function HomePage() {
     }
   };
 
+  useEffect(() => {
+    const accepted = sessionStorage.getItem("disclaimerAccepted");
+    if (!accepted) {
+      setShowDisclaimer(true);
+    }
+  }, []);
+  
+  const handleAcceptDisclaimer = () => {
+    sessionStorage.setItem("disclaimerAccepted", "true");
+    setShowDisclaimer(false);
+  };
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!language) return setMessage("Please enter a language.");
     if (!extractionElement)
       return setMessage("Please select an extraction element.");
-    if (extractionElement === "Other" && !otherElement.trim())
+    if (extractionElement === "Other/Custom" && !otherElement.trim())
       return setMessage("Please specify the extraction element.");
     if (!englishFile || !targetFile)
       return setMessage("Please upload both files.");
@@ -158,10 +200,9 @@ export default function HomePage() {
     setCsvUrl("");
 
     const formData = new FormData();
-    formData.append(
-      "extractionElement",
-      extractionElement === "Other" ? otherElement : extractionElement
-    );
+    formData.append("extractionElement", extractionElement); 
+    formData.append("customRegex", otherElement || ""); 
+
     formData.append("language", language);
     formData.append("scriptType", scriptType);
     formData.append("englishFile", englishFile);
@@ -176,6 +217,13 @@ export default function HomePage() {
       if (!res.ok) throw new Error("Error processing files");
 
       const blob = await res.blob();
+      const text = await blob.text();
+      const rows = text.split("\n").map((row) =>
+        row.split(",").map((cell) => cell.replace(/^"|"$/g, "")) // remove starting/ending quotes
+      );
+
+      setCsvData(rows);
+
       const url = URL.createObjectURL(blob);
       setCsvUrl(url);
       setMessage("File processed successfully! Download below.");
@@ -198,7 +246,7 @@ export default function HomePage() {
         justifyContent: "center",
       }}
     >
-      {showDisclaimer && <DisclaimerModal onAccept={() => setShowDisclaimer(false)} />}
+      {showDisclaimer && <DisclaimerModal onAccept={handleAcceptDisclaimer} />}
 
       <main
         style={{
@@ -224,6 +272,7 @@ export default function HomePage() {
             style={{
               fontSize: "3rem",
               marginBottom: "1.7rem",
+              marginTop: "-.5rem",
               color: "#4da6ff",
             }}
           >
@@ -234,9 +283,25 @@ export default function HomePage() {
             alt="Milqshake logo"
             width={80}
             height={80}
-            style={{ marginTop: "-.8rem" }} // lift the logo slightly
+            style={{ marginTop: "-1.3rem" }} // lift the logo slightly
           />
         </div>
+        {loading && (
+          <div
+            style={{
+              padding: "1rem",
+              marginBottom: "1rem",
+              marginTop: "-.5rem",
+              backgroundColor: "#fff3cd",
+              color: "#856404",
+              borderRadius: "5px",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Processing your files… This may take a few minutes. Please be patient and avoid closing or refreshing the page.
+          </div>
+        )}
         <form
           onSubmit={handleSubmit}
           style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
@@ -280,7 +345,7 @@ export default function HomePage() {
           </label>
 
           {/* Other input appears if "Other" selected */}
-          {extractionElement === "Other" && (
+          {extractionElement === "Other/Custom" && (
             <label style={{ fontWeight: "bold" }}>
               Insert Custom Regex:
               <input
@@ -385,28 +450,88 @@ export default function HomePage() {
           </p>
         )}
 
-        {/* CSV Download link */}
-        {csvUrl && (
-          <a
-            href={csvUrl}
-            download="result.csv"
-            style={{
-              display: "inline-block",
-              marginTop: "1rem",
-              padding: "0.75rem 1.5rem",
-              backgroundColor: "#4da6ff",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "5px",
-            }}
-            onClick={() => {
-              setTimeout(() => URL.revokeObjectURL(csvUrl), 100);
-              setCsvUrl("");
-            }}
-          >
-            Download CSV
-          </a>
+
+        {csvData.length > 0 && (
+          <div style={{ position: "relative", width: '100%', marginBottom: "1rem", marginTop: "3rem" }}>
+            {/* Download button */}
+            {csvUrl && (
+              <a
+                href={csvUrl}
+                download="result.csv"
+                style={{
+                  position: "absolute",
+                  bottom: "0.5rem",
+                  left: "0.5rem",
+                  padding: "0.5rem 1rem",
+                  backgroundColor: "#ffb6c1",
+                  color: "black",
+                  textDecoration: "none",
+                  borderRadius: "5px",
+                  fontWeight: "bold",
+                  fontSize: "0.9rem",
+                  zIndex: 10,
+                  transition: "transform 0.2s, background-color 0.2s",
+              }}
+                onClick={() => {
+                  setTimeout(() => URL.revokeObjectURL(csvUrl), 100);
+                  setCsvUrl("");
+                }}
+              >
+                Download CSV
+              </a>
+            )}
+
+            <DataGrid
+              rows={csvData.slice(1).map((row, index) => ({
+                id: index,
+                ...row.reduce((acc, val, i) => {
+                  acc[`col${i}`] = val;
+                  return acc;
+                }, {})
+              }))}
+              columns={csvData[0].map((header, i) => {
+                const key = header.trim().toLowerCase();
+                const hasDefinition = glossaryDefinitions[key];
+              
+                return {
+                  field: `col${i}`,
+                  headerName: header || `Col ${i + 1}`,
+                  flex: 1,
+                  renderHeader: (params) => (
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                      {header}
+                      {hasDefinition && (
+                        <GlossaryTooltip title={glossaryDefinitions[key]}>
+                          <span
+                            style={{
+                              display: "inline-block",
+                              width: "16px",
+                              height: "16px",
+                              lineHeight: "16px",
+                              textAlign: "center",
+                              borderRadius: "50%",
+                              backgroundColor: "#4da6ff",
+                              color: "white",
+                              fontSize: "0.75rem",
+                              cursor: "pointer",
+                            }}
+                          >
+                            i
+                          </span>
+                        </GlossaryTooltip>
+                      )}
+                    </div>
+                  ),
+                };
+              })}
+              pageSize={10}
+              rowsPerPageOptions={[10, 25, 50]}
+              disableSelectionOnClick
+              autoHeight
+            />
+          </div>
         )}
+
       </main>
     </div>
   );

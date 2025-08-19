@@ -55,6 +55,20 @@ export default function NavMenu() {
             Info
           </Link>
           <Link
+            href="/team"
+            style={{ textDecoration: "none", color: "#333", fontWeight: "bold" }}
+            onClick={() => setOpen(false)}
+          >
+            Team
+          </Link>
+          <Link
+            href="/bug"
+            style={{ textDecoration: "none", color: "#333", fontWeight: "bold" }}
+            onClick={() => setOpen(false)}
+          >
+            Report a Bug
+          </Link>
+          <Link
             href="/contact"
             style={{ textDecoration: "none", color: "#333", fontWeight: "bold" }}
             onClick={() => setOpen(false)}
