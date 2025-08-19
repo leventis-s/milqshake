@@ -1,6 +1,8 @@
 import formidable from "formidable-serverless";
 import { extractTermsFromFiles, generateTranslationComparisonCsv, extractTranslationsOneByOne, filterTemporalSeconds, inferSingularWithGPT } from "../../utils/parse";
 import { monthPattern, weekdayPattern, timePatternAll, time_vocab_singular , relativeTimePattern} from "../../utils/constants";
+import path from "path";
+import fs from "fs";
 
 export const config = {
   api: { bodyParser: false }, // for file uploads
@@ -94,8 +96,18 @@ export default async function handler(req, res) {
         termDict = await filterTemporalSeconds(termDict);
       }
 
+      // Get langCode
+      const langcodesPath = path.join(process.cwd(), "src", "data", "langcodes.json");
+      const langcodes = JSON.parse(fs.readFileSync(langcodesPath, "utf-8"));
+
+      // Get langCode or empty string if not found
+      const langCode = langcodes[language] || "";
+
+      // Debug logging
+      console.log("Language:", language, "LangCode:", langCode);
+
       // Use your GPT extraction (imported from utils)
-      const { topGptResults } = await extractTranslationsOneByOne(termDict, 1400, scriptType);
+      const { topGptResults } = await extractTranslationsOneByOne(termDict, 1000, scriptType, langCode, extractionElement);
 
       // Do different workflow for time
       if (extractionElement.toLowerCase() === "time vocabulary") {

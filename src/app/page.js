@@ -163,6 +163,24 @@ export default function HomePage() {
   const [scriptType, setScriptType] = useState("");
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [csvData, setCsvData] = useState([]);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (!loading) {
+      setProgress(0); // reset when not loading
+      return;
+    }
+  
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        // increment randomly, but max 95% until backend finishes
+        const next = prev + Math.random() * 5;
+        return next < 95 ? next : 95;
+      });
+    }, 2000);
+  
+    return () => clearInterval(interval);
+  }, [loading]);
 
 
   const handleExtractionChange = (e) => {
@@ -247,6 +265,7 @@ export default function HomePage() {
       }}
     >
       {showDisclaimer && <DisclaimerModal onAccept={handleAcceptDisclaimer} />}
+      
 
       <main
         style={{
@@ -302,6 +321,30 @@ export default function HomePage() {
             Processing your files… This may take a few minutes. Please be patient and avoid closing or refreshing the page.
           </div>
         )}
+        {loading && (
+          <div
+            style={{
+              height: '14px',           // bar thickness
+              width: '100%',
+              backgroundColor: '#eee',  // gray background
+              borderRadius: '10px',     // rounded edges
+              overflow: 'hidden',
+              marginBottom: '1rem',
+            }}
+          >
+            <div
+              style={{
+                height: '100%',
+                width: `${progress}%`,
+                backgroundColor: '#ffb6c1', // solid pink fill
+                borderRadius: '10px',
+                transition: 'width 0.3s ease',
+              }}
+            />
+          </div>
+        )}
+
+
         <form
           onSubmit={handleSubmit}
           style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
