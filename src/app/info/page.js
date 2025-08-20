@@ -71,11 +71,53 @@ export default function InfoPage() {
             </li>
           </ul>
         </li>
-        <li><strong>Prepare your corpus</strong> – ensure your bilingual parallel corpora are in a readable .txt format.</li>
-        <li><strong>Upload the files</strong> – use the MILQSHAKE interface to upload your English and target language files.</li>
-        <li><strong>Run the extraction</strong> – start the process. Depending on the corpus size and extraction choices, this may take up to 20 minutes.</li>
-        <li><strong>Download the results</strong> – export the processed data in CSV format for research, analysis, or other applications.</li>
-      </ul>
+        <li>
+            <strong>Prepare your corpus</strong> – ensure your bilingual parallel corpora are in a readable .txt format and neither file is over 2000 lines. To be parallel, each line in the English file must correspond exactly to the same line in the translated target language file. For example:
+            <div style={{ display: "flex", gap: "1rem", marginTop: "0.5rem", fontSize: ".9rem", marginLeft: "2rem"}}>
+              <div>
+                <strong>English file:</strong>
+                <div style={{
+                  backgroundColor: "#f4f4f4",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  padding: "0.5rem",
+                  fontFamily: "monospace",
+                  width: "200px",
+                  marginBottom: "1rem",
+                  fontSize: ".8rem"
+                }}>
+                  Hello<br />
+                  Good morning<br />
+                  Thank you
+                </div>
+              </div>
+              <div>
+                <strong>Target (Spanish) file:</strong>
+                <div style={{
+                  backgroundColor: "#f4f4f4",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  padding: "0.5rem",
+                  fontFamily: "monospace",
+                  width: "200px",
+                  marginBottom: "1rem",
+                  fontSize: ".8rem"
+                }}>
+                  Hola<br />
+                  Buenos días<br />
+                  Gracias
+                </div>
+              </div>
+            </div>
+          </li>
+
+
+          <li>
+            <strong>Upload the files</strong> – use the MILQSHAKE interface to upload your English and target language files.
+          </li>
+          <li><strong>Run the extraction</strong> – start the process. Depending on the corpus size and extraction choices, this may take up to 20 minutes.</li>
+          <li><strong>Download the results</strong> – export the processed data in CSV format for research, analysis, or other applications.</li>
+        </ul>
       </section>
 
       <section style={{ marginBottom: "2rem" }}>

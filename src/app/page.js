@@ -35,18 +35,47 @@ const GlossaryTooltip = styled(({ className, ...props }) => (
   },
 });
 
-function FileDropzone({ label, file, setFile }) {
+const infoIconStyle = {
+  display: "inline-block",
+  width: "16px",
+  height: "16px",
+  lineHeight: "16px",
+  textAlign: "center",
+  borderRadius: "50%",
+  backgroundColor: "#4da6ff",
+  color: "white",
+  fontSize: "0.75rem",
+  cursor: "pointer",
+  marginLeft: "0.4rem",
+  verticalAlign: "text-top",
+  position: "relative",
+  top: "4.8px"
+};
+
+const fileDropzoneInfoStyle = {
+  display: "inline-block",
+  width: "16px",
+  height: "16px",
+  lineHeight: "16px",
+  textAlign: "center",
+  borderRadius: "50%",
+  backgroundColor: "#4da6ff",
+  color: "white",
+  fontWeight: "bold",
+  fontSize: "0.75rem",
+  cursor: "pointer",
+  position: "relative",
+  top: "-2px", // move up only here
+  gap: ".4rem"
+};
+
+
+function FileDropzone({ label, file, setFile, tooltipText }) {
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef();
 
-  const onDragOver = (e) => {
-    e.preventDefault();
-    setDragOver(true);
-  };
-  const onDragLeave = (e) => {
-    e.preventDefault();
-    setDragOver(false);
-  };
+  const onDragOver = (e) => { e.preventDefault(); setDragOver(true); };
+  const onDragLeave = (e) => { e.preventDefault(); setDragOver(false); };
   const onDrop = (e) => {
     e.preventDefault();
     setDragOver(false);
@@ -69,6 +98,7 @@ function FileDropzone({ label, file, setFile }) {
       onDrop={onDrop}
       onClick={onClick}
       style={{
+        position: "relative",
         border: dragOver ? "3px dashed #4da6ff" : "3px dashed #ccc",
         borderRadius: "8px",
         padding: "2rem",
@@ -90,15 +120,52 @@ function FileDropzone({ label, file, setFile }) {
         style={{ display: "none" }}
         accept=".txt"
       />
-      <p style={{ margin: 0, fontWeight: "bold", fontSize: "1.1rem" }}>
-        {label}
-      </p>
-      <p style={{ marginTop: "0.5rem", color: "#555", fontSize: "0.9rem" }}>
+
+      {/* Label with info icon */}
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "0.4rem" }}>
+        <p style={{ margin: 0, fontWeight: "bold", fontSize: "1.1rem" }}>
+          {label}
+        </p>
+
+        {tooltipText && (
+          <GlossaryTooltip
+            title={tooltipText}
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  maxWidth: 400,          // wider tooltip
+                  whiteSpace: "normal",   // allow wrapping
+                  fontSize: "0.9rem",     // optional, better readability
+                  padding: "0.75rem 1rem"
+                }
+              }
+            }}
+          >
+            <span
+              style={{
+                ...fileDropzoneInfoStyle,
+                cursor: "pointer",
+                marginLeft: "4px",
+                fontWeight: "bold",
+              }}
+            >
+              i
+            </span>
+          </GlossaryTooltip>
+        )}
+
+      </div>
+
+      <p style={{ marginTop: "0.2rem", color: "#555", fontSize: "0.9rem" }}>
         {file ? file.name : "Drag & drop a file here, or click to select"}
       </p>
     </div>
   );
 }
+
+
+
+
 
 function DisclaimerModal({ onAccept }) {
   return (
@@ -166,6 +233,7 @@ export default function HomePage() {
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [csvData, setCsvData] = useState([]);
   const [progress, setProgress] = useState(0);
+
 
   useEffect(() => {
     if (!loading) {
@@ -361,7 +429,23 @@ export default function HomePage() {
 
           {/* Extraction Elements dropdown */}
           <label style={{ fontWeight: "bold" }}>
-            Target Terms:
+            Target Terms 
+
+            <GlossaryTooltip
+              title={
+                <span>
+                  Your desired set of translations.
+                  {" "}
+                  For more details, see the{" "}
+                  <a href="/info" style={{ color: "#4da6ff", textDecoration: "underline" }}>
+                    instructions page
+                  </a>.
+                </span>
+              }
+            >
+              <span style={infoIconStyle}>i</span>
+            </GlossaryTooltip>
+
             <select
               value={extractionElement}
               onChange={handleExtractionChange}
@@ -393,6 +477,20 @@ export default function HomePage() {
           {extractionElement === "Other/Custom" && (
             <label style={{ fontWeight: "bold" }}>
               Insert Custom Regex:
+              <GlossaryTooltip
+                title={
+                  <span>
+                    Your custom Regex to target other English vocabulary.
+                    {" "}
+                    For more details and help with Regex creation, see the{" "}
+                    <a href="/info" style={{ color: "#4da6ff", textDecoration: "underline" }}>
+                      instructions page
+                    </a>.
+                  </span>
+                }
+              >
+                <span style={infoIconStyle}>i</span>
+              </GlossaryTooltip>
               <input
                 type="text"
                 value={otherElement}
@@ -412,10 +510,21 @@ export default function HomePage() {
               />
             </label>
           )}
+          
 
           {/* Script type selector */}
           <label style={{ fontWeight: "bold" }}>
-            Script Type:
+            Script Type
+            <GlossaryTooltip
+              title={
+                <span>
+                  Choose the script used for the target language. For example, “Latin” refers to 
+                  Latin-based alphabets (English, Spanish, French, etc.).
+                </span>
+              }
+            >
+              <span style={infoIconStyle}>i</span>
+            </GlossaryTooltip>
             <select
               value={scriptType}
               onChange={(e) => setScriptType(e.target.value)}
@@ -445,20 +554,46 @@ export default function HomePage() {
             </select>
           </label>
 
-          {/* File upload boxes side by side */}
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem" }}>
               <FileDropzone
-                label="English language file"
+                label="English-language file"
                 file={englishFile}
                 setFile={setEnglishFile}
+                tooltipText={
+                  <span>
+                    Upload the English source .txt file. This file <strong>must be parallel</strong> to the target-language file, meaning each line in this English file should correspond exactly to the translated line in the target file.<br /><br />
+                    See the {" "}
+                    <a
+                      href="/info"
+                      style={{ color: "#4da6ff", textDecoration: "underline" }}
+                    >
+                      instructions page
+                    </a> for an example.
+                  </span>
+                }
+                tooltipWidth={800}
               />
             </div>
+
             <div style={{ flex: 1, minWidth: "250px", marginTop: ".75rem" }}>
               <FileDropzone
-                label="Target language file"
+                label="Target-language file"
                 file={targetFile}
                 setFile={setTargetFile}
+                tooltipText={
+                  <span>
+                    Upload the target-language .txt file. This file <strong>must be parallel</strong> to the English-language file, meaning each line in this file should correspond exactly to the translated line in the English file.<br /><br />
+                    See the {" "}
+                    <a
+                      href="/info"
+                      style={{ color: "#4da6ff", textDecoration: "underline" }}
+                    >
+                      instructions page
+                    </a> for an example.
+                  </span>
+                }
+                tooltipWidth={400}
               />
             </div>
           </div>
