@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function TeamPage() {
   return (
     <main style={{ padding: "1rem", fontFamily: "Arial, sans-serif", lineHeight: 1.6 }}>
-      <div style={{ marginLeft: "40px", marginRight: "40px" }}>
+      <div style={{ marginLeft: "80px", marginRight: "10px" }}>
         {/* Header */}
         <div
           style={{
@@ -11,7 +11,7 @@ export default function TeamPage() {
             alignItems: "center",
             justifyContent: "center",
             gap: "0.5rem",
-            marginBottom: "2rem",
+            marginBottom: "4rem",
           }}
         >
           <h1
@@ -45,7 +45,7 @@ export default function TeamPage() {
           }}
         >
           {/* Headshot on the left */}
-          <div style={{ flexShrink: 0 }}>
+          <div style={{ flexShrink: 0, marginTop: "1.3rem" }}>
             <Image
               src="/headshot.jpg"
               alt="Samantha Leventis"
@@ -55,7 +55,7 @@ export default function TeamPage() {
           </div>
 
           {/* Text on the right */}
-          <div style={{ maxWidth: "700px" }}>
+          <div style={{ maxWidth: "750px" }}>
             <h2 style={{ fontSize: "1.5rem", marginBottom: "0.2rem" }}>
               Project Manager & Lead Developer
             </h2>
@@ -83,7 +83,13 @@ export default function TeamPage() {
 
             {/* Bio */}
             <p style={{ marginBottom: "1rem" }}>
-              [Insert a brief biography here. Include your background, experience, and your role in the MILQSHAKE project.]
+            Pursuing my M.Sc. in Computer Science at Stanford, I find inspiration in the ways technology can connect with — and transform — other fields. With a B.Sc. in Symbolic Systems, I’m drawn to the many ways knowledge takes form, from the structure of human language to the logic of computation, and how these perspectives can inform the design of AI and technical architectures.
+            </p>
+            <p style={{ marginBottom: "1rem" }}>
+            This passion has led me to Stanford SILICON-Unicode, where I use my technical background and linguistic knowledge to help expand digital support for underrepresented languages. Through projects like MILQSHAKE, I’ve discovered how reimagining and repurposing existing data can open new doors, sparking fresh approaches to longstanding challenges.
+            </p>
+            <p>
+            As I enter my final year at Stanford, I look ahead to a future where I can bring my educational background to think creatively and confront complex, large-scale problems — building technologies that are not only powerful, but also inclusive and transformative.
             </p>
           </div>
         </section>
