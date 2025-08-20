@@ -63,10 +63,10 @@ export default function InfoPage() {
             <li>
               <strong>Other / Custom</strong> – Provide a custom regex. Examples:
               <ul style={{ paddingLeft: "1.5rem", listStyleType: "disc" , fontSize: "0.8rem" }}>
-                <li>\b[A-Z][a-z]+ville\b – matches place names ending in “ville”</li>
+                <li>\b[A-Z][a-z]+ville\b – matches place names ending in &ldquo;ville&rdquo;</li>
                 <li>\b\w{5}\b – matches words with 5 or more letters</li>
                 <li>\b(?:happy|sad|angry|excited)\b – matches specific emotion words</li>
-                <li>\b[A-Za-z]+(?:ing|ed)\b – matches words ending in “ing” or “ed”</li>
+                <li>\b[A-Za-z]+(?:ing|ed)\b – matches words ending in &ldquo;ing&rdquo; or &ldquo;ed&rdquo;</li>
               </ul>
             </li>
           </ul>
@@ -135,7 +135,7 @@ export default function InfoPage() {
 
       <div style={{ marginBottom: "1.5rem" }}>
         <p><strong>Q:</strong> How can I extract my own desired terms?</p>
-        <p><strong>A:</strong> Use the custom regex option to define your own extraction patterns. If you're not familiar with creating regexes, tools like <a
+        <p><strong>A:</strong> Use the custom regex option to define your own extraction patterns. If you&apos;re not familiar with creating regexes, tools like <a
         href="https://rows.com/tools/regex-generator"
         target="_blank"
         rel="noopener noreferrer"

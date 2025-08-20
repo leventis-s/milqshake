@@ -42,7 +42,6 @@ export default async function handler(req, res) {
       }
 
       // Choose extractor based on extractionElement
-      const predefinedExtractionElements = new Set(["months", "days of the week", "time vocabulary", "relative time vocabulary", "other/custom"]);
       let extractor;
       let csvContent;
 
