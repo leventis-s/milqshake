@@ -26,6 +26,24 @@ export const relativeTimeNames = [
   "this hour", "this minute", "this second"
 ];
 
+export const relTimeBaseword = {
+  "last year": "year",
+  "this year": "year",
+  "next year": "year",
+  "last month": "month",
+  "this month": "month",
+  "next month": "month",
+  "last week": "week",
+  "this week": "week",
+  "next week": "week",
+  "yesterday": "day",
+  "today": "day",
+  "tomorrow": "day",
+  "this hour": "hour",
+  "this minute": "minute",
+  "this second": "second"
+}
+
 function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

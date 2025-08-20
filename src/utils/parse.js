@@ -3,8 +3,8 @@ import unidecode from "unidecode";
 import stringSimilarity from "string-similarity"; // for fuzzy matching
 import { client } from "./openaiClient";
 import fs from "fs/promises";
-
-
+import { relTimeBaseword } from "./constants";
+import path from "path";
 
 // Extract all full month names from a sentence as a Set
 export function extractAllMatches(sentence, pattern) {
@@ -116,29 +116,104 @@ export function filterResults(dataDict) {
     return cleaned;
   }
 
-export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptType = "Latin") {
+export async function extractTranslationsOneByOne(
+    keyDict,
+    delay = 1000,
+    scriptType = "Latin",
+    langCode,
+    extractionElement
+  ) {
     const gptResults = {};
     const topGptResults = {};
+
+    // 🔹 If relative time vocab, load CLDR
+    let cldrBaseWords = {};
+    try {
+      const cldrPath = path.join(
+        process.cwd(),
+        "src",
+        "data",
+        "cldr",
+        langCode,
+        "dateFields.json"
+      );
+      console.log("Looking for CLDR file at:", cldrPath);
+      
+      const cldrData = JSON.parse(await fs.readFile(cldrPath, "utf8"));
+      console.log(`✅ Loaded CLDR data for ${langCode}`)
+
+      for (const [relTimeWord, baseword] of Object.entries(relTimeBaseword)) {
+        try {
+          console.log(`➡️ Checking relTimeWord: "${relTimeWord}", baseword: "${baseword}"`);
+
+          const cldrEntry =
+            cldrData.main?.[langCode]?.dates?.fields?.[baseword];
+          const cldrDisplay = cldrEntry?.displayName;
+
+          // Only include if it's non-empty, and not the same as the relTimeWord
+          if (
+            cldrDisplay &&
+            cldrDisplay.toLowerCase() !== relTimeWord.toLowerCase()
+          ) {
+            cldrBaseWords[relTimeWord] = cldrDisplay;
+          }
+          else {
+            console.log(
+              `   ⏩ Skipping because displayName "${cldrDisplay}" is same as relTimeWord "${relTimeWord}"`
+            );
+          }
+        } catch {
+          // skip if missing
+        }
+      }
+      console.log("📦 Final cldrBaseWords:", cldrBaseWords);
+    } catch (err) {
+      console.warn(`⚠️ Could not load CLDR file for ${langCode}:`, err.message);
+    }
   
+    // 🔹 Main loop
     for (const [key, sentencePairs] of Object.entries(keyDict)) {
       gptResults[key] = [];
       console.log(`Processing key: ${key}\n`);
+  
       let topWord = null;
       let topCount = 0;
       let confidence = "0/0";
       let variants = [];
   
       for (const [engSent, tgtSent] of sentencePairs) {
-        const prompt = `
-  You are a helpful multilingual assistant. Your task is to extract the translation of the English word "${key}" from the following sentence pair.
-  
-  English: ${engSent}
-  Translation: ${tgtSent}
-  
-  Please return ONLY the translation of the word "${key}" as it appears in the target sentence. Respond with just the word and no extra explanation.
-  
-  If you believe the word has a suffix or prefix, remove it and return just the base word.
-  `;
+        let prompt = `
+      You are a helpful multilingual assistant. Your task is to extract the translation of the English term "${key}" from the following sentence pair.
+      
+      English: ${engSent}
+      Translation: ${tgtSent}
+      `;
+      
+        // Add CLDR context if applicable
+        if (extractionElement.toLowerCase() === "relative time vocabulary") {
+          const baseWord = relTimeBaseword[key.toLowerCase()];
+          const cldrBaseWord = key ? cldrBaseWords[key] : null;
+      
+          console.log("[RelTime Debug] key:", key);
+          console.log("[RelTime Debug] baseWord (from relTimeBaseword):", baseWord);
+          console.log("[RelTime Debug] cldrBaseWord (from cldrBaseWords):", cldrBaseWord);
+      
+          // Only include CLDR context if it exists and differs from the baseWord
+          if (cldrBaseWord && cldrBaseWord.toLowerCase() !== baseWord.toLowerCase()) {
+            prompt += `
+      
+      Additional context: The term for "${baseWord}" is "${cldrBaseWord}".
+      This may help in extracting "${key}", but don't be too attached to it.
+      The term for "${key}" may be entirely different than the term for "${baseWord}".
+      `;
+          }
+        }
+      
+        prompt += `
+      Please return ONLY the translation of "${key}" as it appears in the target sentence.
+      Do not give an explanation. If you believe the term has a suffix or prefix, remove it and return just the base term.
+      `;
+      
   
         try {
           const response = await client.chat.completions.create({
@@ -154,36 +229,30 @@ export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptT
           gptResults[key].push(null);
         }
   
-        // Delay between requests
         await new Promise((r) => setTimeout(r, delay));
       }
   
-      // Filter results
+      // Filter + tally results
       const filteredWords = filterResults({ [key]: gptResults[key] })[key] || [];
-  
-      // Count occurrences manually using a plain JS object
       const counter = filteredWords.reduce((acc, word) => {
-        if (!word) return acc; // skip null or empty if any
+        if (!word) return acc;
         acc[word] = (acc[word] || 0) + 1;
         return acc;
       }, {});
       const total = filteredWords.length;
+  
       if (total > 0) {
-        // Convert counter to array of [word, count] pairs
         const sorted = Object.entries(counter).sort((a, b) => b[1] - a[1]);
-  
         topCount = sorted[0][1];
-        const tiedCandidates = sorted.filter(([word, count]) => count === topCount).map(([word]) => word);
+        const tiedCandidates = sorted.filter(([w, c]) => c === topCount).map(([w]) => w);
   
-        // Compute variants (>20%, not tied top words)
         variants = sorted
-          .filter(([word, count]) => !tiedCandidates.includes(word) && (count / total > 0.2 || count > 2))
-          .map(([word]) => word);
+          .filter(([w, c]) => !tiedCandidates.includes(w) && (c / total > 0.2 || c > 2))
+          .map(([w]) => w);
   
         if (tiedCandidates.length === 1) {
           topWord = tiedCandidates[0];
         } else {
-          // Score tied candidates by fuzzy matches
           const similarityScores = {};
           for (const candidate of tiedCandidates) {
             const comparisons = tiedCandidates.concat(variants).filter((w) => w !== candidate);
@@ -192,31 +261,23 @@ export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptT
               0
             );
           }
-          // Pick candidate with highest similarity score (tie-break by order)
           topWord = Object.entries(similarityScores).sort((a, b) => b[1] - a[1])[0][0];
         }
   
         confidence = `${topCount}/${total}`;
   
-        // Recompute variants excluding the top word
         variants = sorted
           .filter(
-            ([word, count]) =>
-              word !== topWord && (count / total > 0.2 || count > 2 || isFuzzyMatch(word, topWord, scriptType))
+            ([w, c]) =>
+              w !== topWord &&
+              (c / total > 0.2 || c > 2 || isFuzzyMatch(w, topWord, scriptType))
           )
-          .map(([word]) => word)
+          .map(([w]) => w)
           .slice(0, 4);
-        variants = variants.filter(v => v && v.toLowerCase() !== "none");
-
+        variants = variants.filter((v) => v && v.toLowerCase() !== "none");
       }
   
-      topGptResults[key] = {
-        canonical: topWord,
-        variants,
-        count: topCount,
-        total,
-        confidence,
-      };
+      topGptResults[key] = { canonical: topWord, variants, count: topCount, total, confidence };
   
       console.log(`\nAll filtered translations for ${key}:`);
       filteredWords.forEach((w, i) => console.log(`  ${i + 1}. ${w}`));
@@ -226,7 +287,7 @@ export async function extractTranslationsOneByOne(keyDict, delay = 1400, scriptT
     }
   
     return { topGptResults };
-  }  
+  }
 
 /**
 * Generates a CSV string summarizing translation comparisons for any key set.
@@ -261,7 +322,8 @@ export async function extractTermsFromFiles(engFile, targetFile, extractFunc) {
       const targetSentence = targetLines[i].trim();
       const extractedTerms = extractFunc(engSentence);
   
-      for (const term of extractedTerms) {
+      for (const ogTerm of extractedTerms) {
+        const term = ogTerm.toLowerCase()
         if (!termDict[term]) termDict[term] = [];
         termDict[term].push([engSentence, targetSentence]);
       }

@@ -6,6 +6,7 @@ export default function ComboBox({ value, onChange }) {
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const maxVisible = 7;
+  
 
   // Sync inputValue with parent
   useEffect(() => {
@@ -42,7 +43,7 @@ export default function ComboBox({ value, onChange }) {
 
   return (
     <div style={{ position: "relative", width: "100%" }}>
-      Target Langauge:
+      Target Langauge 
       <input
         type="text"
         value={inputValue}
