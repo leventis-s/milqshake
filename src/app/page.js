@@ -218,10 +218,6 @@ function DisclaimerModal({ onAccept }) {
 
 export default function HomePage() {
   const [language, setLanguage] = useState("");
-  const [selectedLang, setSelectedLang] = useState({
-    language: "",
-    code: "und",
-  });
   const [extractionElement, setExtractionElement] = useState("");
   const [otherElement, setOtherElement] = useState("");
   const [englishFile, setEnglishFile] = useState(null);
@@ -422,7 +418,6 @@ export default function HomePage() {
           {/* ComboBox TESTING GROUNDS */}
           <ComboBox
             onChange={(val) => {
-              setSelectedLang(val);
               setLanguage(val.language); // keep the string in sync for handleSubmit
             }}
           />
