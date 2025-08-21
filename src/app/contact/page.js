@@ -76,7 +76,7 @@ export default function ContactPage() {
             alt="Milqshake logo"
             width={80}
             height={80}
-            style={{ marginTop: "-.75rem" }}
+            style={{ marginTop: "-1rem" }}
           />
         </div>
 

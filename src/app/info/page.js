@@ -17,7 +17,7 @@ export default function InfoPage() {
           style={{
             fontSize: "3rem",
             marginBottom: "1.2rem",
-            marginTop: "1.5rem",
+            margin: "1.4rem 0 1.7rem",
             color: "#4da6ff",
             fontWeight: "bold",
             fontFamily: "Arial Black, Arial, sans-serif", // updated font
@@ -30,7 +30,7 @@ export default function InfoPage() {
           alt="Milqshake logo"
           width={80}
           height={80}
-          style={{ marginTop: ".9rem" }} // match ContactPage alignment
+          style={{ marginTop: ".6rem" }} // match ContactPage alignment
         />
         </div>
 

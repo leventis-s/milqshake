@@ -338,10 +338,11 @@ export default function HomePage() {
           maxWidth: "800px",
           width: "100%",
           backgroundColor: "#fffde7",
-          padding: "2rem",
           borderRadius: "8px",
+          padding: "1rem",
           opacity: showDisclaimer ? 0.3 : 1,
           pointerEvents: showDisclaimer ? "none" : "auto",
+          fontFamily: "Arial, sans-serif"
         }}
       >
         {/* Header with text + logo */}
@@ -357,8 +358,9 @@ export default function HomePage() {
             style={{
               fontSize: "3rem",
               marginBottom: "1.7rem",
-              marginTop: "-.5rem",
+              margin: "-.45rem 0 1.7rem",
               color: "#4da6ff",
+              fontFamily: "Arial Black, Arial, sans-serif"
             }}
           >
             MILQSHAKE
@@ -368,7 +370,7 @@ export default function HomePage() {
             alt="Milqshake logo"
             width={80}
             height={80}
-            style={{ marginTop: "-1.3rem" }} // lift the logo slightly
+            style={{ marginTop: "-1.4rem" }} // lift the logo slightly
           />
         </div>
         {loading && (
