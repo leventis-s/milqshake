@@ -41,7 +41,7 @@ export default function InfoPage() {
         MILQSHAKE is a custom NLP extraction tool built to uncover valuable insights hidden within existing bilingual parallel corpora. Many large open datasets hold more than meets the eye, and MILQSHAKE takes a second look to identify important CLDR-relevant data that can be extracted, organized, and put to practical use.
         </p>
         <p>
-        By processing a parallel corpus, MILQSHAKE extracts these pieces of Unicode CLDR data and presents them in a clean, easy-to-use CSV format. This allows contributors to quickly review, validate, and make use of the results without wading through overwhelming amounts of raw data.
+        By processing a parallel corpus, MILQSHAKE extracts these pieces of CLDR data and presents them in a clean, easy-to-use CSV format. This allows contributors to quickly review, validate, and make use of the results without wading through overwhelming amounts of raw data.
         Beyond its technical capabilities, MILQSHAKE works closely with language communities, nonprofits, and small organizations to unlock insights from datasets that might otherwise remain untapped. It is designed to complement community efforts, streamline translation workflows, and make high-quality data more accessible for everyone involved.
         </p>
       </section>
@@ -150,7 +150,7 @@ export default function InfoPage() {
 
       <div style={{ marginBottom: "1.5rem" }}>
         <p><strong>Q:</strong> How can I get more involved in supporting digitally underrepresented languages?</p>
-        <p><strong>A:</strong> You can contribute by helping to create and validate corpora, participating in community translation projects, or collaborating with organizations like SILICON that support digitally disadvantaged languages.</p>
+        <p><strong>A:</strong> You can contribute by helping to create and validate corpora, participating in community translation projects, or collaborating with organizations like Stanford SILICON that support digitally disadvantaged languages.</p>
       </div>
 
       <div style={{ marginBottom: "1.5rem" }}>
