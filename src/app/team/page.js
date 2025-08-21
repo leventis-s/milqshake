@@ -86,7 +86,7 @@ export default function TeamPage() {
             Pursuing my M.Sc. in Computer Science at Stanford, I find inspiration in the ways technology can connect with — and transform — other fields. With a B.Sc. in Symbolic Systems, I’m drawn to the many ways knowledge takes form, from the structure of human language to the logic of computation, and how these perspectives can inform the design of AI and technical architectures.
             </p>
             <p style={{ marginBottom: "1rem" }}>
-            This passion has led me to Stanford SILICON-Unicode, where I use my technical background and linguistic knowledge to help expand digital support for underrepresented languages. Through projects like MILQSHAKE, I’ve discovered how reimagining and repurposing existing data can open new doors, sparking fresh approaches to longstanding challenges.
+            This passion has led me to Stanford SILICON, where I use my technical background and linguistic knowledge to help expand digital support for underrepresented languages. Through projects like MILQSHAKE, I’ve discovered how reimagining and repurposing existing data can open new doors, sparking fresh approaches to longstanding challenges.
             </p>
             <p>
             As I enter my final year at Stanford, I look ahead to a future where I can bring my educational background to think creatively and confront complex, large-scale problems — building technologies that are not only powerful, but also inclusive and transformative.
