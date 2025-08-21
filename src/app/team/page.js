@@ -19,7 +19,7 @@ export default function TeamPage() {
               fontWeight: "bold",
               fontFamily: "Arial Black, Arial, sans-serif",
               margin: 0,
-              marginTop: "1.25rem",
+              marginTop: "1.35rem",
               marginBottom: "-.5rem"
             }}
           >
@@ -147,7 +147,7 @@ export default function TeamPage() {
           {/* Text on the right */}
           <div style={{ maxWidth: "750px" }}>
             <h2 style={{ fontSize: "1.5rem", marginBottom: "0.2rem" }}>
-              Assistant Web Developer
+              Associate Web Developer
             </h2>
             <h3 style={{ fontSize: "1.3rem", marginTop: "0", marginBottom: "0.5rem" }}>
               Tyler Abernethy
@@ -164,7 +164,7 @@ export default function TeamPage() {
 
             {/* Bio */}
             <p style={{ marginBottom: "1rem" }}>
-            My name is Tyler Abernethy, and I am a junior majoring in Symbolic Systems with a focus on natural language and minoring in East Asian studies. Through studying the spoken and written components of Mandarin Chinese, I have gained exposure to the idiosyncrasies of communicating in a character-based script through digital systems. I am looking forward to learning more about the challenges faced by users and working towards digital accessibility on this project!
+            I am a senior at Stanford studying Symbolic Systems, East Asian Studies, and Computer Science. I first became interested in language through studying Mandarin Chinese; seeing the differences in using Chinese versus English online showed me how central language is to the digital experience. With SILICON I’ve gotten to work on tools to introduce more languages to the online world, improving digital accessibility and inclusion.
             </p>
           </div>
           {/* Headshot on the left */}
