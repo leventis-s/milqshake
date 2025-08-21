@@ -46,8 +46,9 @@ const infoIconStyle = {
   color: "white",
   fontSize: "0.75rem",
   cursor: "pointer",
-  marginLeft: "0.4rem",
+  marginLeft: "0.3rem",
   verticalAlign: "text-top",
+  marginTop: "-.25rem",
   position: "relative",
   top: "4.8px"
 };
@@ -425,7 +426,7 @@ export default function HomePage() {
           />
 
           {/* Extraction Elements dropdown */}
-          <label style={{ fontWeight: "bold" }}>
+          <label style={{ fontWeight: "bold", fontSize: "1rem"}}>
             Target Terms 
 
             <GlossaryTooltip
@@ -456,7 +457,7 @@ export default function HomePage() {
                 fontSize: "1rem",
                 fontFamily: "Arial",
                 backgroundColor: "white",
-                color: extractionElement === "" ? "gray" : "black",
+                color: extractionElement === "" ? "gray" : "#171717",
               }}
             >
               <option value="" disabled>
@@ -472,7 +473,7 @@ export default function HomePage() {
 
           {/* Other input appears if "Other" selected */}
           {extractionElement === "Other/Custom" && (
-            <label style={{ fontWeight: "bold" }}>
+            <label style={{ fontWeight: "bold", fontSize: "1rem" }}>
               Insert Custom Regex:
               <GlossaryTooltip
                 title={
@@ -510,7 +511,7 @@ export default function HomePage() {
           
 
           {/* Script type selector */}
-          <label style={{ fontWeight: "bold" }}>
+          <label style={{ fontWeight: "bold", fontSize: "1rem" }}>
             Script Type
             <GlossaryTooltip
               title={

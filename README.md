@@ -1,8 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MILQSHAKE
+
+**MILQSHAKE** (Mining Lexicons in Quality SHAred corpora for Knowledge Extraction) is a research-oriented web platform for extracting targeted bilingual and multilingual lexicons from large-scale parallel corpora.  
+
+It was designed specifically to support **low-resource and digitally disadvantaged languages**, leveraging datasets such as **Meta’s NLLB (No Language Left Behind)** and other open-source corpora.  
+
+You can view the live system at **[milqshake.com](https://milqshake.com)**.  
+
+---
+
+## Features
+
+- 📚 **Parallel Corpus Mining** – Extract specific vocabulary (months, days, technical terms, etc.) from aligned bilingual data.  
+- 🔍 **Customizable Extraction** – Configure term lists and focus languages for tailored lexicon building.  
+- 🌍 **Multilingual Support** – Works across major and low-resource languages.  
+- 📊 **Evaluation Dashboard** – Track exact, variant, fuzzy, and incorrect matches across test sets.  
+- ⚡ **Next.js + Vercel Stack** – Modern frontend with fast deployment and serverless support.  
+- 🎨 **Tailwind Styling** – Clean, responsive UI with easy customization.  
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Make sure you have one of the following installed:
+
+- [Node.js](https://nodejs.org/) (>=18)  
+- npm, yarn, pnpm, or bun as your package manager  
+
+### Installation
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/yourusername/milqshake.git
+cd milqshake
+npm install
+# or
+yarn install
+```
+
+---
+
+### Development Server
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -14,23 +56,95 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser to see the app.
+You can start editing the main page by modifying app/page.js. The app supports hot reloading, so changes appear instantly.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Project Structure
 
-## Learn More
+```
+milqshake/
+├── app/               # Next.js app directory
+│   ├── page.js        # Main landing page
+│   ├── layout.js      # Global layout wrapper
+│   └── api/           # API routes (lexicon extraction endpoints)
+├── components/        # Reusable UI components
+├── lib/               # Utility functions (NLP helpers, evaluation scripts)
+├── public/            # Static assets
+├── styles/            # Tailwind + global styles
+├── README.md
+└── package.json
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Some features (e.g., GPT-based extraction or corpus uploads) may require environment variables. Create a .env.local file in the root directory:
 
-## Deploy on Vercel
+```
+OPENAI_API_KEY=your_api_key
+```
+⚠️ Never commit .env.local to version control.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Testing
+
+Run unit tests (if configured):
+
+```bash
+npm run test
+```
+```bash
+Run lint checks:
+```
+```bash
+npm run lint
+```
+
+---
+
+### Deployment
+
+The easiest way to deploy MILQSHAKE is via Vercel:
+1. Push the repository to GitHub/GitLab/Bitbucket.
+2. Import the repo into Vercel.
+3. Add your environment variables in the Vercel dashboard.
+4. Deploy!
+For more details, see Next.js deployment docs.
+
+---
+
+### Learn More
+
+Next.js Documentation – Official Next.js features and API reference.
+Learn Next.js – Interactive Next.js tutorial.
+Vercel Docs – Deployment and hosting details.
+
+---
+
+### Contributing
+
+We welcome contributions! To get started:
+
+1. Fork the repository
+2. Create a new feature branch (git checkout -b feature/my-feature)
+3. Commit your changes (git commit -m "Add my feature")
+4. Push the branch (git push origin feature/my-feature)
+5. Open a Pull Request
+Please follow our coding style (Tailwind + JavaScript best practices) and ensure tests/linting pass before submitting.
+
+---
+
+### License
+MILQSHAKE is released under the MIT License.
+Feel free to use, modify, and distribute with attribution.
+
+---
+
+### Acknowledgments
+Developed in collaboration with Stanford SILICON and the Unicode Consortium.
+Uses Meta’s NLLB dataset alongside open-source corpora for multilingual evaluation.
+Built on Next.js and Tailwind CSS.

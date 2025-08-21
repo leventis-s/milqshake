@@ -41,7 +41,7 @@ function FloatingInfoHover() {
               boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
               padding: "1rem",
               fontSize: ".9rem",
-              color: "#222",
+              color: "#171717",
             }}
           >
             Confused? Visit our{" "}

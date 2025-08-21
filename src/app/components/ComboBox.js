@@ -42,7 +42,7 @@ export default function ComboBox({ value, onChange }) {
   }
 
   return (
-    <div style={{ position: "relative", width: "100%" }}>
+    <div style={{ position: "relative", width: "100%", fontWeight: "bold", fontFamily: "Arial"}}>
       Target Langauge 
       <input
         type="text"
@@ -59,7 +59,6 @@ export default function ComboBox({ value, onChange }) {
           fontSize: "1rem",
           fontFamily: "Arial",
           backgroundColor: "white",
-          color: "black",
         }}
       />
       {showDropdown && filteredOptions.length > 0 && (
