@@ -1,6 +1,6 @@
 # MILQSHAKE
 
-**MILQSHAKE** (Mining Lexicons in Quality SHAred corpora for Knowledge Extraction) is a research-oriented web platform for extracting targeted bilingual and multilingual lexicons from large-scale parallel corpora.  
+**MILQSHAKE** is a research-oriented web platform for extracting targeted bilingual and multilingual lexicons from large-scale parallel corpora.  
 
 It was designed specifically to support **low-resource and digitally disadvantaged languages**, leveraging datasets such as **Meta’s NLLB (No Language Left Behind)** and other open-source corpora.  
 
