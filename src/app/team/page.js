@@ -87,7 +87,7 @@ export default function TeamPage() {
             </p>
           </div>
           {/* Headshot on the left */}
-          <div style={{ flexShrink: 0, marginTop: "1rem" }}>
+          <div style={{ flexShrink: 0, marginTop: "1.2rem" }}>
             <Image
               src="/headshot_zoom.jpg"
               alt="Samantha Leventis"
@@ -98,7 +98,7 @@ export default function TeamPage() {
 
           {/* Text on the right */}
           <div style={{ maxWidth: "750px" }}>
-            <h2 style={{ fontSize: "1.5rem", marginBottom: "0.2rem" }}>
+            <h2 style={{ fontSize: "1.5rem", marginBottom: "0.2rem", marginTop: ".2rem" }}>
               Project Manager & Lead Developer
             </h2>
             <h3 style={{ fontSize: "1.3rem", marginTop: "0", marginBottom: "0.5rem" }}>
@@ -135,7 +135,7 @@ export default function TeamPage() {
             </p>
           </div>
           {/* Headshot on the left */}
-          <div style={{ flexShrink: 0, marginTop: "1.6rem", marginBottom: "1.6rem" }}>
+          <div style={{ flexShrink: 0, marginTop: "1.8rem", marginBottom: "1.6rem" }}>
             <Image
               src="/tyler_headshot.jpeg"
               alt="Tyler Abernethy"
@@ -146,7 +146,7 @@ export default function TeamPage() {
 
           {/* Text on the right */}
           <div style={{ maxWidth: "750px" }}>
-            <h2 style={{ fontSize: "1.5rem", marginBottom: "0.2rem" }}>
+            <h2 style={{ fontSize: "1.5rem", marginBottom: "0.2rem", marginTop: ".2rem" }}>
               Associate Web Developer
             </h2>
             <h3 style={{ fontSize: "1.3rem", marginTop: "0", marginBottom: "0.5rem" }}>
@@ -168,7 +168,7 @@ export default function TeamPage() {
             </p>
           </div>
           {/* Headshot on the left */}
-          <div style={{ flexShrink: 0, marginTop: "1rem", marginBottom: "2rem"}}>
+          <div style={{ flexShrink: 0, marginTop: "1.2rem", marginBottom: "2rem"}}>
             <Image
               src="/neev_headshot.jpeg"
               alt="Neev Seedani"
@@ -179,7 +179,7 @@ export default function TeamPage() {
 
           {/* Text on the right */}
           <div style={{ maxWidth: "750px" }}>
-            <h2 style={{ fontSize: "1.5rem", marginBottom: "0.2rem" }}>
+            <h2 style={{ fontSize: "1.5rem", marginBottom: "0.2rem", marginTop: ".2rem" }}>
               Graphic Contributor
             </h2>
             <h3 style={{ fontSize: "1.3rem", marginTop: "0", marginBottom: "0.5rem" }}>
