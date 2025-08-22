@@ -73,12 +73,20 @@ export function isFuzzyMatch(
   
     return false;
   }
-  
+
+function toTitleCase(str) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 export function filterResults(dataDict) {
     const cleaned = {};
   
     for (const [key, words] of Object.entries(dataDict)) {
-      const normKey = normalize(key).toLowerCase();
+      const normKey = toTitleCase(normalize(key));
       const keptWords = [];
       const skippedSameAsKey = [];
   
@@ -191,7 +199,7 @@ export async function extractTranslationsOneByOne(
       
         // Add CLDR context if applicable
         if (extractionElement.toLowerCase() === "relative time vocabulary") {
-          const baseWord = relTimeBaseword[key.toLowerCase()];
+          const baseWord = relTimeBaseword[toTitleCase(key)];
           const cldrBaseWord = key ? cldrBaseWords[key] : null;
       
           console.log("[RelTime Debug] key:", key);
@@ -323,7 +331,7 @@ export async function extractTermsFromFiles(engFile, targetFile, extractFunc) {
       const extractedTerms = extractFunc(engSentence);
   
       for (const ogTerm of extractedTerms) {
-        const term = ogTerm.toLowerCase()
+        const term = toTitleCase(ogTerm)
         if (!termDict[term]) termDict[term] = [];
         termDict[term].push([engSentence, targetSentence]);
       }
