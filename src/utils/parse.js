@@ -118,7 +118,7 @@ export function filterResults(dataDict) {
         keptWords.push(...skippedSameAsKey);
       }
   
-      cleaned[key] = keptWords;
+      cleaned[toTitleCase(key)] = keptWords;
     }
   
     return cleaned;
@@ -149,13 +149,12 @@ export async function extractTranslationsOneByOne(
       
       const cldrData = JSON.parse(await fs.readFile(cldrPath, "utf8"));
       console.log(`✅ Loaded CLDR data for ${langCode}`)
-
       for (const [relTimeWord, baseword] of Object.entries(relTimeBaseword)) {
         try {
           console.log(`➡️ Checking relTimeWord: "${relTimeWord}", baseword: "${baseword}"`);
 
           const cldrEntry =
-            cldrData.main?.[langCode]?.dates?.fields?.[baseword];
+            cldrData.main?.[langCode]?.dates?.fields?.[baseword.toLowerCase()];
           const cldrDisplay = cldrEntry?.displayName;
 
           // Only include if it's non-empty, and not the same as the relTimeWord
@@ -199,10 +198,10 @@ export async function extractTranslationsOneByOne(
       
         // Add CLDR context if applicable
         if (extractionElement.toLowerCase() === "relative time vocabulary") {
-          const baseWord = relTimeBaseword[toTitleCase(key)];
-          const cldrBaseWord = key ? cldrBaseWords[key] : null;
+          const baseWord = relTimeBaseword[key.toLowerCase()];
+          const cldrBaseWord = key.toLowerCase() ? cldrBaseWords[key.toLowerCase()] : null;
       
-          console.log("[RelTime Debug] key:", key);
+          console.log("[RelTime Debug] key:", key.toLowerCase());
           console.log("[RelTime Debug] baseWord (from relTimeBaseword):", baseWord);
           console.log("[RelTime Debug] cldrBaseWord (from cldrBaseWords):", cldrBaseWord);
       
@@ -438,7 +437,13 @@ export async function inferSingularWithGPT(baseWord, singularCandidates, pluralC
   
       // Normalize and title-case the guess
       singularGuess = normalize(singularGuess); // implement or import normalize
-      singularGuess = singularGuess.charAt(0).toUpperCase() + singularGuess.slice(1).toLowerCase();
+      singularGuess = toTitleCase(singularGuess)
+
+      console.log("[inferSingularWithGPT] baseWord:", baseWord);
+      console.log("  candidates:", { singularCandidates, pluralCandidates });
+      console.log("  GPT raw response:", response.choices[0].message.content);
+      console.log("  normalized guess:", singularGuess);
+
   
       return singularGuess;
     } catch (error) {
