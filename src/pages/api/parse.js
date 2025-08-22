@@ -4,6 +4,14 @@ import { monthPattern, weekdayPattern, timePatternAll, time_vocab_singular , rel
 import path from "path";
 import fs from "fs";
 
+function toTitleCase(str) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 export const config = {
   api: { bodyParser: false }, // for file uploads
 };
@@ -111,8 +119,9 @@ export default async function handler(req, res) {
       // Do different workflow for time
       if (extractionElement.toLowerCase() === "time vocabulary") {
         const inferredSingulars = {};
-      
-        for (const baseWord of time_vocab_singular) {
+        let baseWord;
+        for (baseWord of time_vocab_singular) {
+          baseWord = toTitleCase(baseWord)
           const singularInfo = topGptResults[baseWord] || {};
           const pluralInfo = topGptResults[baseWord + "s"] || {};
       
@@ -129,6 +138,7 @@ export default async function handler(req, res) {
           // Combine candidates and remove duplicates
           const allCandidatesSet = new Set([...singularCandidates, ...pluralCandidates]);
           const allCandidates = Array.from(allCandidatesSet);
+          console.log(`All candidates for '${baseWord}': ${allCandidatesSet}`);
       
           let inferredCanonical;
       
@@ -138,6 +148,7 @@ export default async function handler(req, res) {
             inferredCanonical = "—"; // Or whatever default you want
           } else {
             // Call your GPT function to infer singular form
+            console.log(`Finding singular for '${baseWord}`);
             inferredCanonical = await inferSingularWithGPT(baseWord, singularCandidates, pluralCandidates);
           }
       
